@@ -1,0 +1,7 @@
+﻿  PopUpWindow.cpp
+C:\Users\admin\source\repos\Strategy\Strategy\PopUpWindow.cpp(19,47): warning C4244: '引數': 將 'T' 轉換為 'unsigned int'，由於類型不同，可能導致資料遺失
+          with
+          [
+              T=float
+          ]
+  Strategy.vcxproj -> C:\Users\admin\source\repos\Strategy\Debug\Strategy.exe
