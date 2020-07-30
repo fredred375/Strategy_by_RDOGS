@@ -1,5 +1,5 @@
 #pragma once
-#include "Point.h"
+#include "PopUpWindow.h"
 
 class State
 {
@@ -15,6 +15,6 @@ public:
 	virtual ~State();
 	virtual void update() = 0;
 	virtual void render(sf::RenderWindow* window = nullptr) = 0;
-	void resizeView(float aspectRatio);
+	virtual void resizeView(float aspectRatio);
 };
 

@@ -1,20 +1,17 @@
 #pragma once
-#include "PopUpWindow.h"
+#include"MouseData.h"
 class Point
 {
 private:
 	sf::CircleShape body;
-	PopUpWindow popUpWindow;
 	std::wstring name;
 
-	bool isPopUp;
 public:
 	Point();
 	Point(float x, float y);
-	Point(float x, float y, std::wstring name, sf::Font* font);
+	Point(float x, float y, std::wstring name);
+	std::wstring getName() const { return name; }
 	void draw(sf::RenderWindow* window);
 	bool clicked(float mouseX, float mouseY);
-	void popUp(sf::RenderWindow* window);
-	void update(MouseData* mouseData, bool& popUpActivated);
 };
 

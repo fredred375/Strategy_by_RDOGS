@@ -57,6 +57,16 @@ void Game::updateEvent()
 
 void Game::resizeView()
 {
+	sf::Vector2u windowSize = window.getSize();
+	if (windowSize.x < 800)
+	{
+		windowSize.x = 800;
+	}
+	if (windowSize.y < 600)
+	{
+		windowSize.y = 600;
+	}
+	window.setSize(windowSize);
 	if (!states.empty())
 	{
 		float aspectRatio = static_cast<float>(window.getSize().x) / static_cast<float>(window.getSize().y);
@@ -81,6 +91,19 @@ Game::Game() :
 	icon.loadFromFile("Resources/Textures/RDOGE.png");
 	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 	ShowWindow(window.getSystemHandle(), SW_MAXIMIZE);
+
+	sf::TcpSocket socket;
+	sf::Socket::Status status = socket.connect("127.0.0.1 ", 53000);
+	if (status != sf::Socket::Done)
+	{
+		printf("connection failed\n");
+	}
+	else
+	{
+		printf("connection successed!\n");
+	}
+
+
 
 	states.push(new MapState(&window, &states, &mouseData));
 }

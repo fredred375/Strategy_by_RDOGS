@@ -11,6 +11,11 @@ void PopUpWindow::setString(const std::wstring& s)
 	text.setString(s);
 }
 
+void PopUpWindow::setPoint(const Point& point)
+{
+	text.setString(point.getName());
+}
+
 void PopUpWindow::initDraw(sf::RenderWindow* window)
 {
 	sf::View view = window->getView();
@@ -24,12 +29,17 @@ void PopUpWindow::initDraw(sf::RenderWindow* window)
 	closeBody.setPosition(windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x, 0.f));
 }
 
-void PopUpWindow::checkMouseData(MouseData* mouseData, bool& popUpActivated)
+void PopUpWindow::checkMouseData(MouseData* mouseData)
 {
-	checkCloseWindow(mouseData, popUpActivated);
+	checkCloseWindow(mouseData);
 }
 
-void PopUpWindow::checkCloseWindow(MouseData* mouseData, bool& popUpActivated)
+void PopUpWindow::update(MouseData* mouseData)
+{
+	checkMouseData(mouseData);
+}
+
+void PopUpWindow::checkCloseWindow(MouseData* mouseData)
 {
 	if (mouseData->leftClicked)
 	{
@@ -39,19 +49,21 @@ void PopUpWindow::checkCloseWindow(MouseData* mouseData, bool& popUpActivated)
 			if (mouseData->mousePos.y <= windowTopRight.y + windowBody.getSize().y / 10.f && mouseData->mousePos.y >= windowTopRight.y - windowBody.getSize().y / 10.f)
 			{
 				//closed
-				popUpActivated = false;
+				activated = false;
 			}
 		}
 	}
 }
 
-PopUpWindow::PopUpWindow()
+PopUpWindow::PopUpWindow() :
+	activated(false)
 {
 	windowBody.setFillColor(sf::Color::Black);
 	text.setString("Test");
 }
 
-PopUpWindow::PopUpWindow(sf::Font* font)
+PopUpWindow::PopUpWindow(sf::Font* font) :
+	activated(false)
 {
 	windowBody.setFillColor(sf::Color::Black);
 	text = sf::Text("Test", *font, 1);

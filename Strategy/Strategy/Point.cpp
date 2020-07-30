@@ -1,38 +1,31 @@
 #include "Point.h"
 
 Point::Point() :
-	body(1), isPopUp(false)
+	body(1)
 {
 	body.setOrigin(body.getRadius(), body.getRadius());
 	body.setFillColor(sf::Color::Red);
-	popUpWindow.setString(name);
 }
 
 Point::Point(float x, float y) :
-	body(20), isPopUp(false)
+	body(20)
 {
 	body.setOrigin(body.getRadius(), body.getRadius());
 	body.setPosition(x, y);
 	body.setFillColor(sf::Color::Red);
-	popUpWindow.setString(name);
 }
 
-Point::Point(float x, float y, std::wstring name, sf::Font* font) :
-	body(20), isPopUp(false), name(name), popUpWindow(font)
+Point::Point(float x, float y, std::wstring name) :
+	body(20), name(name)
 {
 	body.setOrigin(body.getRadius(), body.getRadius());
 	body.setPosition(x, y);
 	body.setFillColor(sf::Color::Red);
-	popUpWindow.setString(name);
 }
 
 void Point::draw(sf::RenderWindow* window)
 {
 	window->draw(body);
-	if (isPopUp)
-	{
-		popUpWindow.draw(window);
-	}
 }
 
 bool Point::clicked(float mouseX, float mouseY)
@@ -49,17 +42,4 @@ bool Point::clicked(float mouseX, float mouseY)
 	return false;
 }
 
-void Point::popUp(sf::RenderWindow* window)
-{
-	isPopUp = true;
-	popUpWindow.initDraw(window);
-}
 
-void Point::update(MouseData* mouseData, bool& popUpActivated)
-{
-	popUpWindow.checkMouseData(mouseData, popUpActivated);
-	if (!popUpActivated)
-	{
-		isPopUp = false;
-	}
-}

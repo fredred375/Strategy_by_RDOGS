@@ -3,8 +3,9 @@
 void MapState::initPoints()
 {
 	font.loadFromFile("Resources/Fonts/NotoSansTC-Regular.otf");
-	points["總圖"] = Point(3074.63f, 1709.87f, L"總圖", &font);
-	points["運動場"] = Point(2170.36, 1226.96, L"運動場", &font);
+	popUpWindow = new PopUpWindow(&font);
+	points["總圖"] = Point(3074.63f, 1709.87f, L"總圖");
+	points["運動場"] = Point(2170.36, 1226.96, L"運動場");
 }
 
 void MapState::initTextures()
@@ -68,16 +69,16 @@ void MapState::checkPointsClicked()
 			if (it->second.clicked(mouseData->mousePos.x, mouseData->mousePos.y))
 			{
 				std::cout << it->first << " is clicked" << std::endl;
-				popUpKey = it->first;
-				popUpWindowActivated = true;
-				it->second.popUp(window);
+				popUpWindow->activated = true;
+				popUpWindow->setPoint(it->second);
+				popUpWindow->initDraw(window);
 			}
 		}
 	}
 }
 
 MapState::MapState(sf::RenderWindow* window, std::stack<State*>* states, MouseData* mouseData) :
-	State(window, states, mouseData), popUpWindowActivated(false)
+	State(window, states, mouseData)
 {
 	initTextures();
 	initPoints();
@@ -87,18 +88,19 @@ MapState::MapState(sf::RenderWindow* window, std::stack<State*>* states, MouseDa
 
 MapState::~MapState()
 {
+	delete popUpWindow;
 }
 
 void MapState::update()
 {
-	if (!popUpWindowActivated)
+	if (!popUpWindow->activated)
 	{
 		updateMouseInput();
 		checkBoundaries();
 	}
 	else
 	{
-		points[popUpKey].update(mouseData, popUpWindowActivated);
+		popUpWindow->update(mouseData);
 	}
 }
 
@@ -109,8 +111,11 @@ void MapState::updateMouseInput()
 	{
 		if (mouseData->wheelTicks > 0)
 		{
+			if (view.getSize().x > 1920.f)
+			{
+				view.setSize(view.getSize() * 0.95f);
+			}
 			//zoom in
-			view.setSize(view.getSize() * 0.95f);
 		}
 		else
 		{
@@ -142,8 +147,18 @@ void MapState::render(sf::RenderWindow* window)
 	{
 		it->second.draw(window);
 	}
-	if (popUpWindowActivated)
+	if (popUpWindow->activated)
 	{
-		points[popUpKey].draw(window);
+		popUpWindow->draw(window);
+	}
+}
+
+void MapState::resizeView(float aspectRatio)
+{
+	State::resizeView(aspectRatio);
+	if (popUpWindow->activated)
+	{
+		window->setView(view);
+		popUpWindow->initDraw(window);
 	}
 }

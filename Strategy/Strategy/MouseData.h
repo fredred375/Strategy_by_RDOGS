@@ -1,6 +1,7 @@
 #pragma once
 #include "SFML\System.hpp"
 #include "SFML\Graphics.hpp"
+#include "SFML\Network.hpp"
 #include <Windows.h>
 #include <iostream>
 #include <string>

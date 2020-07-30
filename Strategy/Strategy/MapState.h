@@ -7,8 +7,7 @@ private:
     std::map<std::string, sf::Texture> textures;
     std::map<std::string, Point> points;
     sf::Font font;
-
-    bool popUpWindowActivated;
+    PopUpWindow* popUpWindow;
     std::string popUpKey;
 
     sf::RectangleShape background;
@@ -24,5 +23,6 @@ public:
     ~MapState();
     void update() override;
     void render(sf::RenderWindow* window = nullptr) override;
+    void resizeView(float aspectRatio) override;
 };
 

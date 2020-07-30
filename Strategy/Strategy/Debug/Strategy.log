@@ -1,7 +1,3 @@
-﻿  PopUpWindow.cpp
-C:\Users\admin\source\repos\Strategy\Strategy\PopUpWindow.cpp(19,47): warning C4244: '引數': 將 'T' 轉換為 'unsigned int'，由於類型不同，可能導致資料遺失
-          with
-          [
-              T=float
-          ]
+﻿  MapState.cpp
+C:\Users\admin\source\repos\Strategy\Strategy\MapState.cpp(8,60): warning C4305: '引數': 從 'double' 轉換為 'float'，是由較大的類型轉換為較小的類型，可能導致資料遺失
   Strategy.vcxproj -> C:\Users\admin\source\repos\Strategy\Debug\Strategy.exe
