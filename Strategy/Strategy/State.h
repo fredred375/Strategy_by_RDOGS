@@ -13,7 +13,7 @@ protected:
 public:
 	State(sf::RenderWindow* window, std::stack<State*>* states, MouseData* mouseData);
 	virtual ~State();
-	virtual void update() = 0;
+	virtual void update(const float& dt) = 0;
 	virtual void render(sf::RenderWindow* window = nullptr) = 0;
 	virtual void resizeView(float aspectRatio);
 };

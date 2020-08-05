@@ -4,9 +4,14 @@
 void Game::update()
 {
 	updateEvent();
+	dt = clock.restart().asSeconds();
+	if (dt > 1.f / 20.f)
+	{
+		dt = 1.f / 20.f;
+	}
 	if (!states.empty())
 	{
-		states.top()->update();
+		states.top()->update(dt);
 	}
 	else
 	{
@@ -31,10 +36,21 @@ void Game::updateEvent()
 			resizeView();
 			break;
 		case sf::Event::MouseButtonPressed:
-			if (sfEvent.mouseButton.button == sf::Mouse::Left)
+			if (sfEvent.mouseButton.button == sf::Mouse::Left || sfEvent.mouseButton.button == sf::Mouse::Right)
 			{
 				mouseData.oldMousePos = window.mapPixelToCoords(sf::Vector2i(sfEvent.mouseButton.x, sfEvent.mouseButton.y));
-				mouseData.leftPressed = true;
+				if (!mouseData.leftPressed)
+				{
+					mouseData.mousePressedPos = sf::Vector2i(sfEvent.mouseButton.x, sfEvent.mouseButton.y);
+				}
+				if (sfEvent.mouseButton.button == sf::Mouse::Left)
+				{
+					mouseData.leftPressed = true;
+				}
+				else
+				{
+					mouseData.rightPressed = true;
+				}
 			}
 			break;
 		case sf::Event::MouseButtonReleased:
@@ -43,10 +59,17 @@ void Game::updateEvent()
 				mouseData.leftPressed = false;
 				mouseData.leftClicked = true;
 			}
+			else if (sfEvent.mouseButton.button == sf::Mouse::Right)
+			{
+				mouseData.rightPressed = false;
+				mouseData.rightClicked = true;
+			}
 			break;
 		case sf::Event::MouseMoved:
 			mouseData.moving = true;
 			mouseData.mousePos = window.mapPixelToCoords(sf::Vector2i(sfEvent.mouseMove.x, sfEvent.mouseMove.y));
+			mouseData.mousePosPixel = sf::Vector2i(sfEvent.mouseMove.x, sfEvent.mouseMove.y);
+
 			break;
 		case sf::Event::MouseWheelMoved:
 			mouseData.wheelTicks = sfEvent.mouseWheel.delta;
@@ -85,7 +108,7 @@ void Game::render()
 }
 
 Game::Game() :
-	window(sf::VideoMode::getDesktopMode(), "Strategy by RDOGS", sf::Style::Default)
+	window(sf::VideoMode::getDesktopMode(), "Strategy by RDOGS", sf::Style::Default), dt(0.f)
 {
 	sf::Image icon;
 	icon.loadFromFile("Resources/Textures/RDOGE.png");

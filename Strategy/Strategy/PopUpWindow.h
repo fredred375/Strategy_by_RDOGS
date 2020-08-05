@@ -1,24 +1,29 @@
 #pragma once
 #include "Point.h"
+#include "centerText.h"
 class PopUpWindow
 {
 private:
 	sf::RectangleShape windowBody;
 	sf::RectangleShape closeBody;
-	sf::Font font;
-	sf::Text text;
-
-
-	void setPosition(sf::Vector2f pos);
+	sf::RectangleShape purchaseBody;
+	sf::Font* font;
+	sf::Text nameText;
+	sf::Text priceText;
+	sf::Text ownerText;
+	sf::Text purchaseText;
+	Point* point;
+	Player* player;
+	bool canPurchase;
 	void checkCloseWindow(MouseData* mouseData);
+	void checkPurchase(MouseData* mouseData);
 public:
 	bool activated;
-	PopUpWindow();
-	PopUpWindow(sf::Font* font);
+	PopUpWindow(Player* player, sf::Font* font);
 	void draw(sf::RenderWindow* window);
 	void setString(const std::wstring& s);
-	void setPoint(const Point& point);
-	void initDraw(sf::RenderWindow* window); //only called when this window is sure to be drawn
+	void setPoint(Point* point);
+	void initDraw(const sf::View& view); //only called when this window is sure to be drawn
 	void checkMouseData(MouseData* mouseData);
 	void update(MouseData* mouseData);
 };

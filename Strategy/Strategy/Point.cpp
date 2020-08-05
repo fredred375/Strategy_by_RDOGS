@@ -1,22 +1,15 @@
 #include "Point.h"
+#include "Player.h"
 
 Point::Point() :
-	body(1)
+	body(20.f), name(name), price(price), owner(nullptr)
 {
 	body.setOrigin(body.getRadius(), body.getRadius());
 	body.setFillColor(sf::Color::Red);
 }
 
-Point::Point(float x, float y) :
-	body(20)
-{
-	body.setOrigin(body.getRadius(), body.getRadius());
-	body.setPosition(x, y);
-	body.setFillColor(sf::Color::Red);
-}
-
-Point::Point(float x, float y, std::wstring name) :
-	body(20), name(name)
+Point::Point(float x, float y, std::wstring name, int price) :
+	body(20.f), name(name), price(price), owner(nullptr)
 {
 	body.setOrigin(body.getRadius(), body.getRadius());
 	body.setPosition(x, y);
@@ -40,6 +33,20 @@ bool Point::clicked(float mouseX, float mouseY)
 		return (distance < body.getRadius() ? true : false);
 	}
 	return false;
+}
+
+Player* Point::getOwner() const
+{
+	return owner;
+}
+
+void Point::purchased(Player* player)
+{
+	//send message to original owner
+
+	//send message to original owner
+
+	owner = player;
 }
 
 

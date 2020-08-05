@@ -147,15 +147,23 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapState.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerUI.cpp" />
     <ClCompile Include="Point.cpp" />
+    <ClCompile Include="PointHoverUI.cpp" />
     <ClCompile Include="PopUpWindow.cpp" />
+    <ClCompile Include="centerText.cpp" />
     <ClCompile Include="State.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
+    <ClInclude Include="centerText.h" />
     <ClInclude Include="MapState.h" />
     <ClInclude Include="MouseData.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerUI.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="PointHoverUI.h" />
     <ClInclude Include="PopUpWindow.h" />
     <ClInclude Include="State.h" />
   </ItemGroup>

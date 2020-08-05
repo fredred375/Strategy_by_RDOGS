@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{bf637b0a-f78a-4d72-a8a2-a67c1ca4dd09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functions">
+      <UniqueIdentifier>{7abf9cc2-5a40-4690-aa4e-3fdf351f0b61}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -30,8 +36,20 @@
     <ClCompile Include="MapState.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
-    <ClCompile Include="PopUpWindow.cpp">
+    <ClCompile Include="Player.cpp">
       <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PopUpWindow.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PointHoverUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="centerText.cpp">
+      <Filter>Functions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -50,8 +68,20 @@
     <ClInclude Include="MouseData.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
-    <ClInclude Include="PopUpWindow.h">
+    <ClInclude Include="Player.h">
       <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="PopUpWindow.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="PointHoverUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="centerText.h">
+      <Filter>Functions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -8,6 +8,9 @@ private:
 
 	MouseData mouseData;
 
+	sf::Clock clock;
+	float dt;
+
 	std::stack<State*> states;
 
 	void update();

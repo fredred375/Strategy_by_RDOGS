@@ -2,10 +2,10 @@
 
 void MapState::initPoints()
 {
-	font.loadFromFile("Resources/Fonts/NotoSansTC-Regular.otf");
-	popUpWindow = new PopUpWindow(&font);
-	points["總圖"] = Point(3074.63f, 1709.87f, L"總圖");
-	points["運動場"] = Point(2170.36, 1226.96, L"運動場");
+	font.loadFromFile("Resources/Fonts/NotoSansCJKtc-Regular.otf");
+	points["總圖"] = Point(3074.63f, 1709.87f, L"總圖", 7000);
+	points["運動場"] = Point(2170.36f, 1226.96f, L"運動場", 5000);
+	points["管圖"] = Point(2407.59f, 2370.13f, L"管圖", 2000);
 }
 
 void MapState::initTextures()
@@ -17,6 +17,13 @@ void MapState::initMap()
 {
 	background.setTexture(&textures["background"]);
 	background.setSize(sf::Vector2f(textures["background"].getSize()));
+}
+
+void MapState::initUI()
+{
+	popUpWindow = new PopUpWindow(&player, &font);
+	playerUI = new PlayerUI(&player, &font);
+	pointHoverUI = new PointHoverUI(&font);
 }
 
 void MapState::checkBoundaries()
@@ -63,27 +70,53 @@ void MapState::checkPointsClicked()
 {
 	if (mouseData->leftClicked)
 	{
-		std::cout << mouseData->mousePos.x << ", " << mouseData->mousePos.y << std::endl;
-		for (auto it = points.begin(); it != points.end(); it++)
+		std::cout << mouseData->mousePos.x << "f, " << mouseData->mousePos.y << "f" << std::endl;
+	}
+	for (auto it = points.begin(); it != points.end(); it++)
+	{
+		if (it->second.clicked(mouseData->mousePos.x, mouseData->mousePos.y))
 		{
-			if (it->second.clicked(mouseData->mousePos.x, mouseData->mousePos.y))
+			if (mouseData->leftClicked)
 			{
-				std::cout << it->first << " is clicked" << std::endl;
 				popUpWindow->activated = true;
-				popUpWindow->setPoint(it->second);
-				popUpWindow->initDraw(window);
+				popUpWindow->setPoint(&it->second);
+				popUpWindow->initDraw(view);
+				pointHoverUI->activated = false;
 			}
+			else if (mouseData->rightClicked)
+			{
+				player.moveToPoint(&it->second);
+			}
+			else
+			{
+				if (!pointHoverUI->activated)
+				{
+					pointHoverUI->activated = true;
+					pointHoverUI->setPoint(&it->second);
+					pointHoverUI->initDraw(view);
+				}
+			}
+			return;
 		}
+	}
+	if (pointHoverUI->activated)
+	{
+		pointHoverUI->activated = false;
 	}
 }
 
 MapState::MapState(sf::RenderWindow* window, std::stack<State*>* states, MouseData* mouseData) :
-	State(window, states, mouseData)
+	State(window, states, mouseData), player(1), mapViewport(0.25f, 0.f, 0.75f, 1.f), playerUI(nullptr),
+	UIViewport(0.f, 0.f, 0.25f, 1.f)
 {
 	initTextures();
 	initPoints();
 	initMap();
+	initUI();
 	view = sf::View(sf::Vector2f(2000.f, 2000.f), sf::Vector2f(1000.f, 1000.f));
+	view.setViewport(mapViewport);
+	UIView = sf::View(sf::Vector2f(-240.f, 500.f), sf::Vector2f(480.f, 1000.f));
+	UIView.setViewport(UIViewport);
 }
 
 MapState::~MapState()
@@ -91,8 +124,9 @@ MapState::~MapState()
 	delete popUpWindow;
 }
 
-void MapState::update()
+void MapState::update(const float& dt)
 {
+	playerUI->update(mouseData);
 	if (!popUpWindow->activated)
 	{
 		updateMouseInput();
@@ -102,6 +136,7 @@ void MapState::update()
 	{
 		popUpWindow->update(mouseData);
 	}
+	player.update(dt);
 }
 
 void MapState::updateMouseInput()
@@ -127,8 +162,11 @@ void MapState::updateMouseInput()
 	//view dragging
 	if (mouseData->leftPressed && mouseData->moving)
 	{
-		const sf::Vector2f deltaPos = mouseData->oldMousePos - mouseData->mousePos;
-		view.setCenter(view.getCenter() + deltaPos);
+		if (mouseData->mousePressedPos.x > window->getSize().x * 0.25f)
+		{
+			const sf::Vector2f deltaPos = mouseData->oldMousePos - mouseData->mousePos;
+			view.setCenter(view.getCenter() + deltaPos);
+		}
 	}
 
 	//point clicking
@@ -141,11 +179,18 @@ void MapState::render(sf::RenderWindow* window)
 	{
 		window = this->window;
 	}
+	window->setView(UIView);
+	playerUI->draw(window);
 	window->setView(view);
 	window->draw(background);
 	for (auto it = points.begin(); it != points.end(); it++)
 	{
 		it->second.draw(window);
+	}
+	player.draw(window);
+	if (pointHoverUI->activated)
+	{
+		pointHoverUI->draw(window);
 	}
 	if (popUpWindow->activated)
 	{
@@ -155,10 +200,9 @@ void MapState::render(sf::RenderWindow* window)
 
 void MapState::resizeView(float aspectRatio)
 {
-	State::resizeView(aspectRatio);
+	State::resizeView(aspectRatio * 0.75f);
 	if (popUpWindow->activated)
 	{
-		window->setView(view);
-		popUpWindow->initDraw(window);
+		popUpWindow->initDraw(view);
 	}
 }
