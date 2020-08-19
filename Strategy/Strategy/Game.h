@@ -6,6 +6,10 @@ private:
 	sf::RenderWindow window;
 	sf::Event sfEvent;
 
+	// ADDED =======================
+	Communicator communicator;
+	// =============================
+
 	MouseData mouseData;
 
 	std::stack<State*> states;

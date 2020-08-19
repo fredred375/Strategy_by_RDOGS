@@ -1,3 +1,6 @@
-﻿  main.cpp
-D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy_Server\main.cpp(20,13): warning C4101: 'mode': unreferenced local variable
+﻿  Communicator.cpp
+  Server.cpp
+  Team.cpp
+  main.cpp
+  Generating Code...
   Strategy_Server.vcxproj -> D:\GitHub Files\Strategy_by_RDOGS\Strategy\Debug\Strategy_Server.exe

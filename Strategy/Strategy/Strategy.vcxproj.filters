@@ -33,6 +33,15 @@
     <ClCompile Include="PopUpWindow.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="Communicator.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="Request.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectRequest.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -51,6 +60,24 @@
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="PopUpWindow.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Strategy_Server\PacketFormat.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Communicator.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketProperties.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Variables.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Request.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectRequest.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>

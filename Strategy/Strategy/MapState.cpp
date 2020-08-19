@@ -18,6 +18,18 @@ void MapState::initMap()
 	background.setSize(sf::Vector2f(textures["background"].getSize()));
 }
 
+//void MapState::logIn()
+//{
+//	Request* connectRequest = this->communicator->requestConnect(this->teamID);
+//	if (connectRequest != nullptr)
+//	{
+//		while(true)
+//		{
+//
+//		}
+//	}
+//}
+
 void MapState::checkBoundaries()
 {
 	sf::Vector2f viewCenter = view.getCenter();
@@ -76,8 +88,8 @@ void MapState::checkPointsClicked()
 	}
 }
 
-MapState::MapState(sf::RenderWindow* window, std::stack<State*>* states, MouseData* mouseData) :
-	State(window, states, mouseData), popUpWindowActivated(false)
+MapState::MapState(sf::RenderWindow* window, std::stack<State*>* states, MouseData* mouseData, Communicator* communicator) :
+	State(window, states, mouseData, communicator), popUpWindowActivated(false)
 {
 	initTextures();
 	initPoints();
@@ -100,6 +112,8 @@ void MapState::update()
 	{
 		points[popUpKey].update(mouseData, popUpWindowActivated);
 	}
+
+	this->communicator->update();
 }
 
 void MapState::updateMouseInput()

@@ -82,7 +82,7 @@ Game::Game() :
 	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 	ShowWindow(window.getSystemHandle(), SW_MAXIMIZE);
 
-	states.push(new MapState(&window, &states, &mouseData));
+	states.push(new MapState(&window, &states, &mouseData, &communicator));
 }
 
 Game::~Game()

@@ -1,7 +1,7 @@
 #include "State.h"
 
-State::State(sf::RenderWindow* window, std::stack<State*>* states, MouseData* mouseData) :
-	window(window), states(states), mouseData(mouseData)
+State::State(sf::RenderWindow* window, std::stack<State*>* states, MouseData* mouseData, Communicator* communicator) :
+	window(window), states(states), mouseData(mouseData), communicator(communicator)
 {
 }
 
