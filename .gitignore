@@ -245,3 +245,5 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+Strategy/.vs/Strategy/v16/.suo
+*.db
