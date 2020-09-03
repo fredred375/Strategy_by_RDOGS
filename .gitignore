@@ -247,3 +247,5 @@ paket-files/
 *.sln.iml
 Strategy/.vs/Strategy/v16/.suo
 *.db
+Strategy/.vs/Strategy/v16/.suo
+*.db
