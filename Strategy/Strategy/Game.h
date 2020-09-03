@@ -1,16 +1,19 @@
 #pragma once
 #include "MapState.h"
+#include "Communicator.h"
 class Game
 {
 private:
 	sf::RenderWindow window;
 	sf::Event sfEvent;
 
-	// ADDED =======================
-	Communicator communicator;
-	// =============================
-
 	MouseData mouseData;
+	Communicator* communicator;
+
+	sf::Clock clock;
+	float dt;
+
+	
 
 	std::stack<State*> states;
 
@@ -19,7 +22,7 @@ private:
 	void resizeView();
 	void render();
 public:
-	Game();
+	Game(sf::Uint8 teamID, std::string ip);
 	~Game();
 	void run();
 };

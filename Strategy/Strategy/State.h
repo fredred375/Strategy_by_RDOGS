@@ -1,6 +1,5 @@
 #pragma once
-#include "Point.h"
-#include "Communicator.h"
+#include "PopUpWindow.h"
 
 class State
 {
@@ -15,8 +14,8 @@ protected:
 public:
 	State(sf::RenderWindow* window, std::stack<State*>* states, MouseData* mouseData, Communicator* communicator);
 	virtual ~State();
-	virtual void update() = 0;
+	virtual void update(const float& dt) = 0;
 	virtual void render(sf::RenderWindow* window = nullptr) = 0;
-	void resizeView(float aspectRatio);
+	virtual void resizeView(float aspectRatio);
 };
 

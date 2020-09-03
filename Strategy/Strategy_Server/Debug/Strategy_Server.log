@@ -1,6 +1,57 @@
 ﻿  Communicator.cpp
-  Server.cpp
-  Team.cpp
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Communicator.cpp(132,25): warning C4267: '引數': 將 'size_t' 轉換為 'sf::Uint8'，資料可能遺失
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Communicator.cpp(302,28): warning C4267: '引數': 將 'size_t' 轉換為 'sf::Uint8'，資料可能遺失
+  GameEvent.cpp
+C:\Users\admin\source\repos\Strategy\Strategy_Server\GameEvent.cpp(4,33): warning C4244: '引數': 將 'int' 轉換為 'float'，由於類型不同，可能導致資料遺失
   main.cpp
-  Generating Code...
-  Strategy_Server.vcxproj -> D:\GitHub Files\Strategy_by_RDOGS\Strategy\Debug\Strategy_Server.exe
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Shop.h(84,71): warning C4244: 'return': 將 'double' 轉換為 'sf::Uint32'，由於類型不同，可能導致資料遺失
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Team.h(88,32): warning C4267: 'return': 將 'size_t' 轉換為 'sf::Uint16'，資料可能遺失
+  Server.cpp
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Shop.h(84,71): warning C4244: 'return': 將 'double' 轉換為 'sf::Uint32'，由於類型不同，可能導致資料遺失
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Team.h(88,32): warning C4267: 'return': 將 'size_t' 轉換為 'sf::Uint16'，資料可能遺失
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Server.cpp(158,56): warning C4267: '引數': 將 'size_t' 轉換為 'sf::Uint8'，資料可能遺失
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Server.cpp(196,57): warning C4267: '引數': 將 'size_t' 轉換為 'sf::Uint8'，資料可能遺失
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Server.cpp(265,33): warning C4244: '引數': 將 'int' 轉換為 'float'，由於類型不同，可能導致資料遺失
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Server.cpp(409,42): warning C4267: '引數': 將 'size_t' 轉換為 'sf::Uint8'，資料可能遺失
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Server.cpp(433,45): warning C4267: '引數': 將 'size_t' 轉換為 'sf::Uint8'，資料可能遺失
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Server.cpp(461,6): warning C4267: '引數': 將 'size_t' 轉換為 'sf::Uint8'，資料可能遺失
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Server.cpp(474,46): warning C4267: '引數': 將 'size_t' 轉換為 'sf::Uint8'，資料可能遺失
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Server.cpp(538,36): warning C4018: '>=': signed/unsigned 不相符
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Server.cpp(576,41): warning C4267: '引數': 將 'size_t' 轉換為 'sf::Uint8'，資料可能遺失
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Server.cpp(640,26): warning C4244: '正在初始化': 將 'float' 轉換為 'sf::Uint16'，由於類型不同，可能導致資料遺失
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Server.cpp(760,43): warning C4267: '引數': 將 'size_t' 轉換為 'sf::Uint8'，資料可能遺失
+D:\Microsoft Visual Studio\VC\Tools\MSVC\14.27.29110\include\xmemory(693,1): warning C4267: '正在初始化': 將 'size_t' 轉換為 '_Objty'，資料可能遺失
+          with
+          [
+              _Objty=unsigned char
+          ]
+D:\Microsoft Visual Studio\VC\Tools\MSVC\14.27.29110\include\vector(682): message : 請參考正在進行編譯的函式 樣板 具現化 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,size_t&>(_Alloc &,_Objty *const ,size_t &)'
+          with
+          [
+              _Alloc=std::allocator<sf::Uint8>,
+              _Ty=unsigned char,
+              _Objty=unsigned char
+          ]
+D:\Microsoft Visual Studio\VC\Tools\MSVC\14.27.29110\include\vector(687): message : 請參考正在進行編譯的函式 樣板 具現化 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,size_t&>(_Alloc &,_Objty *const ,size_t &)'
+          with
+          [
+              _Alloc=std::allocator<sf::Uint8>,
+              _Ty=unsigned char,
+              _Objty=unsigned char
+          ]
+D:\Microsoft Visual Studio\VC\Tools\MSVC\14.27.29110\include\vector(700): message : 請參考正在進行編譯的函式 樣板 具現化 'void std::vector<sf::Uint8,std::allocator<sf::Uint8>>::_Emplace_back_with_unused_capacity<size_t&>(size_t &)'
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Server.cpp(470): message : 請參考正在進行編譯的函式 樣板 具現化 'void std::vector<sf::Uint8,std::allocator<sf::Uint8>>::emplace_back<size_t&>(size_t &)'
+  Shop.cpp
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Shop.h(84,71): warning C4244: 'return': 將 'double' 轉換為 'sf::Uint32'，由於類型不同，可能導致資料遺失
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Team.h(88,32): warning C4267: 'return': 將 'size_t' 轉換為 'sf::Uint16'，資料可能遺失
+  Team.cpp
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Shop.h(84,71): warning C4244: 'return': 將 'double' 轉換為 'sf::Uint32'，由於類型不同，可能導致資料遺失
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Team.h(88,32): warning C4267: 'return': 將 'size_t' 轉換為 'sf::Uint16'，資料可能遺失
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Team.cpp(75,96): warning C4244: '引數': 將 'double' 轉換為 'float'，由於類型不同，可能導致資料遺失
+C:\Users\admin\source\repos\Strategy\Strategy_Server\Team.cpp(125,27): warning C4244: '*=': 將 'const _Ty' 轉換為 'sf::Uint32'，由於類型不同，可能導致資料遺失
+          with
+          [
+              _Ty=double
+          ]
+  正在產生程式碼...
+  Strategy_Server.vcxproj -> C:\Users\admin\source\repos\Strategy\Debug\Strategy_Server.exe

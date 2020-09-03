@@ -3,7 +3,7 @@
 
 
 Request::Request()
-	: status(RequestStatus::NA), sendProperties(PacketProperties()), sendPacket(sf::Packet()), timeout(requestTimeout)
+	: status(RequestStatus::PENDING), sendProperties(PacketProperties()), sendPacket(sf::Packet()), timeout(requestTimeout)
 {
 }
 
@@ -33,9 +33,6 @@ Request::~Request()
 
 void Request::update()
 {
-
-
-
 	// check timeout
 
 	if (this->clock.getElapsedTime() > this->timeout && this->status != RequestStatus::RESPONDED)
@@ -47,6 +44,9 @@ void Request::update()
 
 sf::Packet& operator <<(sf::Packet& packet, const PacketProperties& t)
 {
+
+//	std::cout << static_cast<INT32>(t.packetType) << " " << static_cast<INT32>(t.subType) << " " << static_cast<INT32>(t.requestValidity) << std::endl;
+
 	return packet 
 		<< t.ID 
 		<< static_cast<INT32>(t.packetType) 
@@ -57,15 +57,25 @@ sf::Packet& operator <<(sf::Packet& packet, const PacketProperties& t)
 
 sf::Packet& operator >>(sf::Packet& packet, PacketProperties& t)
 {
-	sf::Int32 packetType, subType, requestValidity;
+	INT32 packetType, subType, requestValidity;
 	packet
 		>> t.ID
 		>> packetType
 		>> subType
 		>> requestValidity;
+
+//	std::cout << t.ID << " " << packetType << " " << subType << " " << requestValidity <<  std::endl;
+
+
 	t.packetType = static_cast<PacketType>(packetType);
 	t.subType = static_cast<SubType>(subType);
 	t.requestValidity = static_cast<RequestValidity>(requestValidity);
 
 	return packet;
 }
+
+
+//sf::Packet& operator >>(sf::Packet& packet, PacketType& t)
+//{
+//	return 
+//}

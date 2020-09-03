@@ -3,6 +3,7 @@
 
 // Code for server communicator
 
+
 sf::Packet& operator <<(sf::Packet& packet, const PacketProperties& t)
 {
 	return packet 
@@ -27,8 +28,36 @@ sf::Packet& operator >>(sf::Packet& packet, PacketProperties& t)
 	return packet;
 }
 
-Communicator::Communicator()
-	: currentSendID(0), currentBroadcastID(0), listener(new sf::TcpListener)
+void Communicator::removeSocket(sf::Uint8 id)
+{
+	this->print("SCKT", "Team " + std::to_string(id) + " has disconnected...");
+	this->selector.remove(*this->clientSockets[id]);
+	delete this->clientSockets[id];
+	clientSockets[id] = nullptr;
+}
+
+void Communicator::print(std::string cat, std::string message)
+{
+	short seconds = static_cast<short>(this->gameTime.getElapsedTime().asSeconds());
+	short minutes = seconds / 60;
+	seconds %= 60;
+
+	std::string secondStr, minuteStr;
+
+	secondStr = (seconds < 10 ? "0" + std::to_string(seconds) : std::to_string(seconds));
+	minuteStr = (minutes < 10 ? "0" + std::to_string(minutes) : std::to_string(minutes));
+
+	printf("[");
+	printf("%s:%s", minuteStr.c_str(), secondStr.c_str());
+	printf("]\t[");
+	printf(cat.c_str());
+	printf("]\t");
+	printf(message.c_str());
+	printf("\n");
+}
+
+Communicator::Communicator(sf::Clock& gameTime)
+	: currentSendID(0), currentBroadcastID(0), listener(new sf::TcpListener), gameTime(gameTime), clientUninitialized(std::array<bool, numTeams + 1>({ false }))
 {
 	for (size_t i = 0; i <= numTeams; i++)
 	{
@@ -41,11 +70,12 @@ Communicator::Communicator()
 		exit(1);
 	}
 
-	printf("listening on port %d\n", port);
+	this->print("LSTN", "Listening on port" + std::to_string(port));
 
 	sf::IpAddress localIp = sf::IpAddress::getLocalAddress(), publicIp = sf::IpAddress::getPublicAddress();
-
-	std::cout << "Local IP:\t" << localIp << "\nPublic IP:\t" << publicIp << "\n";
+	
+	this->print("LSTN", "Local IP:\t" + localIp.toString());
+	this->print("LSTN", "Public IP:\t" + publicIp.toString());
 
 	this->selector.add(*this->listener);
 }
@@ -83,39 +113,35 @@ void Communicator::update()
 
 				sends[i].pop();
 
-				printf("sent packet to team %d\n", i);
+				this->print("SEND", "Sent packet to team " + std::to_string(i) + " !");
 
 				break;
 
 
 			case sf::Socket::NotReady:
 
-				printf("team %d is busy...\n", i);
+				this->print("SEND", "Error sending packet to team " + std::to_string(i) + ": NotReady...");
 
 				break;
 			
 
 			case sf::Socket::Disconnected:
 
-				this->selector.remove(*this->clientSockets[i]);
-				delete this->clientSockets[i];
-				clientSockets[i] = nullptr;
+				this->print("SEND", "Error sending packet to team " + std::to_string(i) + ": Disconnected...");
 
-				printf("team %d has disconnected...\n", i);
+				this->removeSocket(i);
 
 				break;
 
 
 			case sf::Socket::Error:
 
-				printf("error sneding packet to team %d...\n", i);
+				this->print("SEND", "Error sending packet to team " + std::to_string(i) + "...");
 
 				break;
 
 
 			default:
-
-				printf("unknown error sending pacekt to team %d...", i);
 
 				break;
 			}
@@ -133,63 +159,73 @@ void Communicator::update()
 
 			if (this->listener->accept(*newClientSocket) == sf::Socket::Status::Done)
 			{
-				printf("accepted new connection\n");
+				this->print("LSTN", "Accepted new connection!");
 			}
 			
 
 			sf::Packet recievePacket, sendPacket;
-			PacketProperties receivePacketProperties;
+			PacketProperties receivePacketProperties, sendPacketProperties;
 
+			sf::Socket::Status status = newClientSocket->receive(recievePacket);
 
-			if (newClientSocket->receive(recievePacket) == sf::Socket::Status::Done)
+			switch (status)
 			{
+			case sf::Socket::Done:
+
 				recievePacket >> receivePacketProperties;
 
-				PacketProperties sendPacketProperties(receivePacketProperties.ID, PacketType::RESPONSE, SubType::RESPONSE_CONNECT);
-				
+				sendPacketProperties = PacketProperties(receivePacketProperties.ID, PacketType::RESPONSE, SubType::RESPONSE_CONNECT);
+
 				// not connected
 				if (receivePacketProperties.subType != SubType::REQUEST_CONNECT)
 				{
 					sendPacketProperties.requestValidity = RequestValidity::NOT_CONNECTED;
 
 					sendPacket << sendPacketProperties;
-					
-					printf("recieved not connected request\n");
+
+					this->print("LSTN", "Recieved request from not logged in client...");
 				}
 
 				else
 				{
-					printf("recieved connecting request\n");
+					this->print("LSTN", "Accepted connecting request!");
 					sf::Uint8 teamID;
 					recievePacket >> teamID;
-
-					if (teamID > numTeams || teamID <= 0) // ID out of range
+					
+					// ID out of range
+					if (teamID > numTeams || teamID <= 0) 
 					{
 						sendPacketProperties.requestValidity = RequestValidity::INVALID_TEAM_ID;
 
 						sendPacket << sendPacketProperties;
 
-						printf("invalid id\n");
+						this->print("RQST", "CONNECT: Invalid team ID...");
 					}
 
-					else if (clientSockets[teamID] != nullptr) // reconnection
+					// reconnection
+					else if (loggedIn[teamID]) 
 					{
 						sendPacketProperties.requestValidity = RequestValidity::VALID;
 
 						sendPacket << sendPacketProperties;
 
 						// remove original socket
-						this->selector.remove(*this->clientSockets[teamID]);
-						delete this->clientSockets[teamID];
+						/*this->selector.remove(*this->clientSockets[teamID]);
+						delete this->clientSockets[teamID];*/
 
 						this->selector.add(*newClientSocket);
 						this->clientSockets[teamID] = newClientSocket;
-						
-						printf("team %d had reconnected!\n", teamID);
+
+						this->clientUninitialized[teamID] = true;
+
+						this->print("RQST", "CONNECT: Team " + std::to_string(teamID) + " has rejoined!");
 					}
 
-					else // new connection
+					// new connection
+					else 
 					{
+						loggedIn[teamID] = true;
+
 						sendPacketProperties.requestValidity = RequestValidity::VALID;
 
 						sendPacket << sendPacketProperties << teamID;
@@ -197,42 +233,90 @@ void Communicator::update()
 						this->selector.add(*newClientSocket);
 						this->clientSockets[teamID] = newClientSocket;
 
-						printf("team %d had joined the game!\n", teamID);
+						this->clientUninitialized[teamID] = true;
+
+						this->print("RQST", "CONNECT: Team " + std::to_string(teamID) + " has joined!");
 					}
 				}
 
 				newClientSocket->send(sendPacket);
 
+				break;
+
+
+			case sf::Socket::NotReady:
+
+				this->print("LSTN", "Error receiving new client: NotReady...");
+
+				break;
+
+
+			case sf::Socket::Disconnected:
+
+				this->print("LSTN", "Error receiving new client: Disconnected...");
+
+				break;
+
+
+			case sf::Socket::Error:
+
+				this->print("LSTN", "Error receiving new client...");
+
+				break;
+
+
+			default:
+
+				break;
 			}
 
-			else
-			{
-				printf("error receiving new client\n");
-			}
 		}
 
 		else
 		{
 			for (size_t i = 1; i <= numTeams; i++)
 			{
-				if (selector.isReady(*this->clientSockets[i])) // recieve requests from client
+				if (this->clientSockets[i] != nullptr) // recieve requests from client
 				{
-					sf::Packet receivePacket;
-
-					if (this->clientSockets[i]->receive(receivePacket))
+					if (selector.isReady(*this->clientSockets[i]))
 					{
-						this->requests->push(receivePacket);
+						sf::Packet receivePacket;
 
-						printf("recieved request from team %d\n", i);
-					}
+						sf::Socket::Status receiveStatus = this->clientSockets[i]->receive(receivePacket);
 
-					else
-					{
-						printf("error receiving packet from team %d\n", i);
+						switch (receiveStatus)
+						{
+						case sf::Socket::Done:
+
+							this->requests[i].push(receivePacket);
+
+							this->print("RCEV", "Recieved request from team " + std::to_string(i));
+
+							break;
+
+
+						case sf::Socket::Disconnected:
+
+							this->print("RCEV", "Error sending packet to team " + std::to_string(i) + ": Disconnected...");
+
+							this->removeSocket(i);
+
+							break;
+
+
+						case sf::Socket::Error:
+
+							this->print("RCEV", "Error sending packet to team " + std::to_string(i) + "...");
+
+							break;
+
+
+						default:
+							break;
+						}
 					}
 				}
 			}
 		}
 	}
 }
-

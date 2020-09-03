@@ -16,14 +16,15 @@ ConnectRequest::ConnectRequest(sf::Uint32 requestID, sf::Uint8 teamID, Communica
 ConnectRequest::~ConnectRequest()
 {
 	printf("connect request terminated: ");
+
 	Request::~Request();
 }
 
 void ConnectRequest::update()
 {
+	Request::update();
 	if (this->status == RequestStatus::RESPONDED)
 	{
-		this->receivePacket >> this->receiveProperties;
 
 		switch (receiveProperties.requestValidity)
 		{
@@ -31,12 +32,13 @@ void ConnectRequest::update()
 
 			printf("connected to server successfully!\n");
 			*(this->communicatorStatus) = CommunicatorStatus::CONNECTED;
+			break;
 
 		case RequestValidity::INVALID_TEAM_ID:
 
 			printf("invlid team id...\n");
 			*(this->communicatorStatus) = CommunicatorStatus::FAILED;
-
+			break;
 		default:
 			break;
 		}

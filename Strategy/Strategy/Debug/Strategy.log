@@ -1,2 +1,80 @@
 ﻿  Communicator.cpp
-  Strategy.vcxproj -> D:\GitHub Files\Strategy_by_RDOGS\Strategy\Debug\Strategy.exe
+  ConnectRequest.cpp
+  Game.cpp
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\PlayerUI.h(33,40): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  InfoBox.cpp
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\InfoBox.cpp(63,20): warning C4018: '<': signed/unsigned mismatch
+  MapState.cpp
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\PlayerUI.h(33,40): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\MapState.cpp(354,18): error C2838: 'BROADCAST_START': illegal qualified name in member declaration
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\MapState.cpp(354,33): error C2065: 'BROADCAST_START': undeclared identifier
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\MapState.cpp(354,33): error C2131: expression did not evaluate to a constant
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\MapState.cpp(354,33): message : a non-constant (sub-)expression was encountered
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\MapState.cpp(354,1): error C2051: case expression not constant
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\MapState.cpp(598,22): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\MapState.cpp(669,39): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\MapState.cpp(732,20): warning C4018: '<': signed/unsigned mismatch
+  MoveRequest.cpp
+  PlayerUI.cpp
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\PlayerUI.h(33,40): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  PointHoverUI.cpp
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\PointHoverUI.cpp(20,41): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+  PopUpWindow.cpp
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\PopUpWindow.cpp(32,51): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\PopUpWindow.cpp(36,52): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\PopUpWindow.cpp(40,54): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\PopUpWindow.cpp(44,58): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\PopUpWindow.cpp(48,58): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+  PurchaseRequest.cpp
+  Request.cpp
+  ShopInformationRequest.cpp
+  State.cpp
+  TeamInformationRequest.cpp
+  TeamPopUp.cpp
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\TeamPopUp.cpp(90,51): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\TeamPopUp.cpp(94,51): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\TeamPopUp.cpp(98,51): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\TeamPopUp.cpp(102,54): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+  main.cpp
+D:\GitHub Files\Strategy_by_RDOGS\Strategy\Strategy\PlayerUI.h(33,40): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Generating Code...

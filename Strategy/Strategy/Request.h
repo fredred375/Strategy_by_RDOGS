@@ -1,7 +1,10 @@
 #pragma once
 
 #include "PacketProperties.h"
-
+#include "Player.h"
+#include "Point.h"
+class Player;
+class Point;
 class Communicator;
 
 enum class RequestStatus
