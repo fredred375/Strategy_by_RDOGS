@@ -27,6 +27,7 @@ sf::Packet& operator >>(sf::Packet& packet, PacketProperties& t)
 
 	return packet;
 }
+//idk
 
 void Communicator::removeSocket(sf::Uint8 id)
 {
