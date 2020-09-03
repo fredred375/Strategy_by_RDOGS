@@ -1,5 +1,9 @@
 #pragma once
+<<<<<<< HEAD
 #include "Point.h"
+=======
+#include "Communicator.h"
+>>>>>>> socket
 class PointHoverUI
 {
 private:

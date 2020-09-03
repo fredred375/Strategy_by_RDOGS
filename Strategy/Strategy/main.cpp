@@ -7,7 +7,27 @@
 
 int main()
 {
-	Game game;
+	int teamIDInput = 0;
+	std::string ipInput;
+	while (!(teamIDInput >= 1 && teamIDInput <= 8))
+	{
+		printf("Enter team ID: ");
+		std::cin >> teamIDInput;
+		if (!(teamIDInput >= 1 && teamIDInput <= 8))
+		{
+			printf("Invalid ID...\n");
+		}
+	}
+
+
+	printf("\nEnter server IP: ");
+
+	std::cin >> ipInput;
+
+
+	Game game(teamIDInput, ipInput);
+
 	game.run();
+
 	return 0;
 }

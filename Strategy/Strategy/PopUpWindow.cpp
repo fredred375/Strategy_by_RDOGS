@@ -1,68 +1,53 @@
 #include "PopUpWindow.h"
 
-void PopUpWindow::setString(const std::wstring& s)
-{
-	nameText.setString(s);
-}
 
 void PopUpWindow::setPoint(Point* point)
 {
 	this->point = point;
-	nameText.setString(point->getName());
-	priceText.setString(L"價格 : " + std::to_wstring(point->getPrice()));
-	if (point->getOwner())
-	{
-		ownerText.setString(L"持有者 : 第" + std::to_wstring(point->getOwner()->getID()) + L"組");
-		if (point->getOwner() == player)
-		{
-			purchaseText.setString(L"已持有");
-		}
-		else
-		{
-			purchaseText.setString(L"購買");
-		}
-	}
-	else
-	{
-		ownerText.setString(L"持有者 : 無");
-		purchaseText.setString(L"購買");
-	}
-	if (player->getPoint() == point && player->getArrived() && player->getCash() >= point->getPrice())
-	{
-		purchaseBody.setFillColor(sf::Color::White);
-		canPurchase = true;
-	}
-	else
-	{
-		purchaseBody.setFillColor(sf::Color(128, 128, 128));
-		canPurchase = false;
-	}
+	communicator->requestShopInformation(point);
 }
 
 void PopUpWindow::initDraw(const sf::View& view)
 {
+	//displays as no owner
+	ownershipBody.setTextureRect(sf::IntRect(0, 0, ownershipTexture.getSize().x / 9, ownershipTexture.getSize().y));
+
 	windowBody.setSize(view.getSize() * 0.75f);
 	windowBody.setPosition(view.getCenter() - windowBody.getSize() / 2.f);
 
-	closeBody.setSize(windowBody.getSize() / 10.f);
-	closeBody.setOrigin(closeBody.getSize() / 2.f);
-	closeBody.setPosition(windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x, 0.f));
+	closeBody.setSize(sf::Vector2f(windowBody.getSize().x * 30.f / 1080.f, windowBody.getSize().y * 30.f / 810.f));
+	closeBody.setPosition(windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 1023.f / 1080.f, windowBody.getSize().y * 23.f / 810.f));
 
-	purchaseBody.setSize(sf::Vector2f(windowBody.getSize().x / 4.f, windowBody.getSize().y / 6.f));
-	purchaseBody.setOrigin(purchaseBody.getSize() / 2.f);
-	purchaseBody.setPosition(windowBody.getPosition().x + windowBody.getSize().x / 2.f, windowBody.getPosition().y + windowBody.getSize().y / 10.f * 8.6f);
+	ownershipBody.setTextureRect(sf::IntRect(0, 0, ownershipTexture.getSize().x / 9, ownershipTexture.getSize().y));
+	ownershipBody.setSize(sf::Vector2f(windowBody.getSize().x * 0.367f, windowBody.getSize().y * 0.23f));
+	ownershipBody.setPosition(windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.106f, windowBody.getSize().y / 10.f * 7.f));
 
-	nameText.setCharacterSize(windowBody.getSize().x / 10.f);
-	centerText(nameText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x / 2.f, windowBody.getSize().y / 10.f));
+	purchaseBody.setSize(sf::Vector2f(windowBody.getSize().x * 0.2037f, windowBody.getSize().y * 0.232f));
+	purchaseBody.setPosition(windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.7638f, windowBody.getSize().y * 0.706f));
 
-	priceText.setCharacterSize(windowBody.getSize().x / 15.f);
-	centerText(priceText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x / 2.f, windowBody.getSize().y / 10.f * 2.5f));
+	moveBody.setSize(sf::Vector2f(windowBody.getSize().x * 0.2037f, windowBody.getSize().y * 0.232f));
+	moveBody.setPosition(windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.5278f, windowBody.getSize().y * 0.706f));
 
-	ownerText.setCharacterSize(windowBody.getSize().x / 15.f);
-	centerText(ownerText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x / 2.f, windowBody.getSize().y / 10.f * 3.5f));
+	nameText.setString(point->getName());
+	nameText.setCharacterSize(windowBody.getSize().x / 18.f);
+	centerText(nameText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x / 10.f * 2.8f, windowBody.getSize().y / 10.f * 1.2f));
 
-	purchaseText.setCharacterSize(windowBody.getSize().x / 15.f);
-	centerText(purchaseText, purchaseBody.getPosition());
+	priceText.setString(L"載入中");
+	priceText.setCharacterSize(windowBody.getSize().x / 25.f);
+	centerTextRight(priceText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.44f, windowBody.getSize().y / 10.f * 5.88f));
+
+	capitalText.setString(L"載入中");
+	capitalText.setCharacterSize(windowBody.getSize().x / 25.f);
+	centerTextRight(capitalText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.44f, windowBody.getSize().y * 0.276f));
+
+	prevRevenueText.setString(L"載入中");
+	prevRevenueText.setCharacterSize(windowBody.getSize().x / 25.f);
+	centerTextRight(prevRevenueText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.44f, windowBody.getSize().y * 0.380f));
+	
+	transactionText.setString(L"載入中");
+	transactionText.setCharacterSize(windowBody.getSize().x / 25.f);
+	centerTextRight(transactionText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.44f, windowBody.getSize().y * 0.485f));
+
 }
 
 void PopUpWindow::checkMouseData(MouseData* mouseData)
@@ -72,37 +57,28 @@ void PopUpWindow::checkMouseData(MouseData* mouseData)
 	{
 		checkPurchase(mouseData);
 	}
+	if (player->getArrived() && player->getPoint() != point)
+	{
+		checkMove(mouseData);
+	}
 }
 
 void PopUpWindow::update(MouseData* mouseData)
 {
-	if (player->getCash() >= point->getPrice())
+	if (point->requestInfo)
 	{
-		if (player->getPoint() == point && player->getArrived())
-		{
-			if (!canPurchase)
-			{
-				purchaseBody.setFillColor(sf::Color::White);
-			}
-			canPurchase = true;
-		}
-		else
-		{
-			if (canPurchase)
-			{
-				purchaseBody.setFillColor(sf::Color(128, 128, 128));
-			}
-			canPurchase = false;
-		}
+		communicator->requestShopInformation(point);
+		point->requestInfo = false;
 	}
-	else
-	{
-		if (canPurchase)
-		{
-			purchaseBody.setFillColor(sf::Color(128, 128, 128));
-		}
-		canPurchase = false;
-	}
+
+	updateOwnership();
+
+	updatePurchaseButton();
+
+	updateMoveButton();
+
+	updateText();
+
 	checkMouseData(mouseData);
 }
 
@@ -110,10 +86,9 @@ void PopUpWindow::checkCloseWindow(MouseData* mouseData)
 {
 	if (mouseData->leftClicked)
 	{
-		sf::Vector2f windowTopRight(windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x, 0.f));
-		if (mouseData->mousePos.x <= windowTopRight.x + windowBody.getSize().x / 20.f && mouseData->mousePos.x >= windowTopRight.x - windowBody.getSize().x / 20.f)
+		if (mouseData->mousePos.x <= closeBody.getPosition().x + closeBody.getSize().x && mouseData->mousePos.x >= closeBody.getPosition().x)
 		{
-			if (mouseData->mousePos.y <= windowTopRight.y + windowBody.getSize().y / 20.f && mouseData->mousePos.y >= windowTopRight.y - windowBody.getSize().y / 20.f)
+			if (mouseData->mousePos.y <= closeBody.getPosition().y + closeBody.getSize().y && mouseData->mousePos.y >= closeBody.getPosition().y)
 			{
 				//closed
 				activated = false;
@@ -125,34 +100,154 @@ void PopUpWindow::checkCloseWindow(MouseData* mouseData)
 
 void PopUpWindow::checkPurchase(MouseData* mouseData)
 {
-	if (mouseData->leftClicked)
+	if (mouseData->leftClicked && !player->disablePurchase)
 	{
-		sf::Vector2f buttonCenter = purchaseBody.getPosition();
-		if (mouseData->mousePos.x <= buttonCenter.x + purchaseBody.getSize().x / 2.f && mouseData->mousePos.x >= buttonCenter.x - purchaseBody.getSize().x / 2.f)
+		if (mouseData->mousePos.x <= purchaseBody.getPosition().x + purchaseBody.getSize().x && mouseData->mousePos.x >= purchaseBody.getPosition().x)
 		{
-			if (mouseData->mousePos.y <= buttonCenter.y + purchaseBody.getSize().y / 2.f && mouseData->mousePos.y >= buttonCenter.y - purchaseBody.getSize().y / 2.f)
+			if (mouseData->mousePos.y <= purchaseBody.getPosition().y + purchaseBody.getSize().y && mouseData->mousePos.y >= purchaseBody.getPosition().y)
 			{
 				//purchased
-				player->purchase(point);
-				purchaseText.setString(L"已購入");
-				purchaseBody.setFillColor(sf::Color(128, 128, 128));
-				centerText(purchaseText, purchaseText.getPosition());
-				ownerText.setString(L"持有者 : 第" + std::to_wstring(point->getOwner()->getID()) + L"組");
-				centerText(ownerText, ownerText.getPosition());
+				communicator->requestPurchase(player, point);
+				purchaseBody.setTextureRect(sf::IntRect(0, 0, purchaseTexture.getSize().x / 2, purchaseTexture.getSize().y));
+				canPurchase = false;
+				player->disablePurchase = true;
 			}
 		}
 	}
 }
 
-PopUpWindow::PopUpWindow(Player* player, sf::Font* font) :
-	activated(false), font(font), player(player), point(nullptr), canPurchase(false)
+void PopUpWindow::checkMove(MouseData* mouseData)
 {
-	windowBody.setFillColor(sf::Color::Black);
+	if (mouseData->leftClicked && !player->disableMove)
+	{
+		if (mouseData->mousePos.x <= moveBody.getPosition().x + moveBody.getSize().x && mouseData->mousePos.x >= moveBody.getPosition().x)
+		{
+			if (mouseData->mousePos.y <= moveBody.getPosition().y + moveBody.getSize().y && mouseData->mousePos.y >= moveBody.getPosition().y)
+			{
+				//move
+				communicator->requestMove(player, point);
+				moveBody.setTextureRect(sf::IntRect(0, 0, moveTexture.getSize().x / 2, moveTexture.getSize().y));
+				player->disableMove = true;
+			}
+		}
+	}
+}
+
+void PopUpWindow::updateOwnership()
+{
+	int ownerID = point->getOwnerID();
+	if (ownerID < 1 || ownerID > 8)
+	{
+		ownerID = 0;
+	}
+	sf::IntRect uvRect(ownershipTexture.getSize().x / 9 * ownerID, 0, ownershipTexture.getSize().x / 9, ownershipTexture.getSize().y);
+	ownershipBody.setTextureRect(uvRect);
+}
+
+void PopUpWindow::updatePurchaseButton()
+{
+	if (!player->disablePurchase)
+	{
+		if (canPurchase)
+		{
+			if (!(player->getArrived() && player->getPoint() == this->point))
+			{
+				canPurchase = false;
+				purchaseBody.setTextureRect(sf::IntRect(static_cast<int>(canPurchase) * purchaseTexture.getSize().x / 2, 0, purchaseTexture.getSize().x / 2, purchaseTexture.getSize().y));
+			}
+		}
+		else if (point->getOwnerID() != this->player->getID())
+		{
+			if (player->getArrived() && player->getPoint() == this->point)
+			{
+				canPurchase = true;
+				purchaseBody.setTextureRect(sf::IntRect(static_cast<int>(canPurchase) * purchaseTexture.getSize().x / 2, 0, purchaseTexture.getSize().x / 2, purchaseTexture.getSize().y));
+			}
+		}
+	}
+}
+
+void PopUpWindow::updateMoveButton()
+{
+	if (!player->disableMove)
+	{
+		if (player->getArrived() && player->getPoint() != point)
+		{
+			moveBody.setTextureRect(sf::IntRect(moveTexture.getSize().x / 2, 0, moveTexture.getSize().x / 2, moveTexture.getSize().y));
+		}
+		else
+		{
+			moveBody.setTextureRect(sf::IntRect(0, 0, moveTexture.getSize().x / 2, moveTexture.getSize().y));
+		}
+	}
+}
+
+void PopUpWindow::updateText()
+{
+	if (point->updatePopUpInfo)
+	{
+		capitalText.setString(std::to_string(point->getCapital()));
+		centerTextRight(capitalText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.44f, windowBody.getSize().y * 0.2874f));
+
+		prevRevenueText.setString(std::to_string(point->getPrevRevenue()));
+		centerTextRight(prevRevenueText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.44f, windowBody.getSize().y * 0.3862f));
+
+		transactionText.setString(std::to_string(point->getTransactionTimes()));
+		centerTextRight(transactionText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.44f, windowBody.getSize().y * 0.4850f));
+
+		priceText.setString(std::to_string(point->getPrice()));
+		centerTextRight(priceText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.44f, windowBody.getSize().y * 0.5837f));
+		updateOwnership();
+
+		point->updatePopUpInfo = false;
+	}
+}
+
+PopUpWindow::PopUpWindow(Player* player, sf::Font* font, Communicator* communicator) :
+	activated(false), font(font), player(player), point(nullptr), canPurchase(false), communicator(communicator)
+{
 	nameText.setFont(*font);
+	nameText.setStyle(sf::Text::Bold);
 	priceText.setFont(*font);
-	ownerText.setFont(*font);
-	purchaseText.setFont(*font);
-	purchaseText.setFillColor(sf::Color::Black);
+	priceText.setFillColor(sf::Color(26, 115, 232));
+	priceText.setStyle(sf::Text::Bold);
+	capitalText.setFont(*font);
+	capitalText.setFillColor(sf::Color(26, 115, 232));
+	capitalText.setStyle(sf::Text::Bold);
+	prevRevenueText.setFont(*font);
+	prevRevenueText.setFillColor(sf::Color(26, 115, 232));
+	prevRevenueText.setStyle(sf::Text::Bold);
+	transactionText.setFont(*font);
+	transactionText.setFillColor(sf::Color(26, 115, 232));
+	transactionText.setStyle(sf::Text::Bold);
+
+	if (windowTexture.loadFromFile("Resources/Textures/UI/PopUpWindow/windowBody.png"))
+	{
+		windowBody.setTexture(&windowTexture);
+	}
+	else
+	{
+		std::cout << "Failed to load texture : PopUpWindow.png" << std::endl;
+	}
+	if (ownershipTexture.loadFromFile("Resources/Textures/UI/PopUpWindow/checkmarkbox.png"))
+	{
+		ownershipBody.setTexture(&ownershipTexture);
+		ownershipBody.setTextureRect(sf::IntRect(0, 0, ownershipTexture.getSize().x / 9, ownershipTexture.getSize().y));
+	}
+	if (purchaseTexture.loadFromFile("Resources/Textures/UI/PopUpWindow/purchaseButton.png"))
+	{
+		purchaseBody.setTexture(&purchaseTexture);
+		purchaseBody.setTextureRect(sf::IntRect(static_cast<int>(canPurchase) * purchaseTexture.getSize().x / 2, 0, purchaseTexture.getSize().x / 2, purchaseTexture.getSize().y));
+	}
+	if (moveTexture.loadFromFile("Resources/Textures/UI/PopUpWindow/moveButton.png"))
+	{
+		moveBody.setTexture(&moveTexture);
+		moveBody.setTextureRect(sf::IntRect(0, 0, moveTexture.getSize().x / 2, moveTexture.getSize().y));
+	}
+	if (closeTexture.loadFromFile("Resources/Textures/UI/PopUpWindow/close.png"))
+	{
+		closeBody.setTexture(&closeTexture);
+	}
 }
 
 void PopUpWindow::draw(sf::RenderWindow* window)
@@ -161,8 +256,11 @@ void PopUpWindow::draw(sf::RenderWindow* window)
 	window->draw(windowBody);
 	window->draw(nameText);
 	window->draw(priceText);
-	window->draw(ownerText);
 	window->draw(closeBody);
 	window->draw(purchaseBody);
-	window->draw(purchaseText);
+	window->draw(moveBody);
+	window->draw(ownershipBody);
+	window->draw(capitalText);
+	window->draw(transactionText);
+	window->draw(prevRevenueText);
 }

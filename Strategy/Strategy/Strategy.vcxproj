@@ -93,7 +93,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Program Files\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-audio-d.lib;sfml-network-d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -124,7 +124,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Program Files\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics.lib; sfml-window.lib; sfml-system.lib; sfml-audio.lib; sfml-network.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -144,28 +144,51 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="centerText.cpp" />
+    <ClCompile Include="Communicator.cpp" />
+    <ClCompile Include="ConnectRequest.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="InfoBox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapState.cpp" />
+    <ClCompile Include="MoveRequest.cpp" />
+    <ClCompile Include="Notification.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerUI.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="PointHoverUI.cpp" />
     <ClCompile Include="PopUpWindow.cpp" />
-    <ClCompile Include="centerText.cpp" />
+    <ClCompile Include="PurchaseRequest.cpp" />
+    <ClCompile Include="Request.cpp" />
+    <ClCompile Include="ShopInformationRequest.cpp" />
     <ClCompile Include="State.cpp" />
+    <ClCompile Include="TeamInformationRequest.cpp" />
+    <ClCompile Include="TeamPopUp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h" />
     <ClInclude Include="centerText.h" />
+    <ClInclude Include="Communicator.h" />
+    <ClInclude Include="ConnectRequest.h" />
+    <ClInclude Include="constants.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="InfoBox.h" />
     <ClInclude Include="MapState.h" />
     <ClInclude Include="MouseData.h" />
+    <ClInclude Include="MoveRequest.h" />
+    <ClInclude Include="Notification.h" />
+    <ClInclude Include="PacketProperties.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerUI.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="PointHoverUI.h" />
     <ClInclude Include="PopUpWindow.h" />
+    <ClInclude Include="PurchaseRequest.h" />
+    <ClInclude Include="Request.h" />
+    <ClInclude Include="ShopInformationRequest.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="TeamInformationRequest.h" />
+    <ClInclude Include="TeamPopUp.h" />
+    <ClInclude Include="Variables.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resources.rc" />

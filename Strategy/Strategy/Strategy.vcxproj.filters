@@ -14,10 +14,19 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="UI">
-      <UniqueIdentifier>{bf637b0a-f78a-4d72-a8a2-a67c1ca4dd09}</UniqueIdentifier>
+      <UniqueIdentifier>{7516149c-e24b-4fbf-ba7f-b6f830b35eff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Functions">
-      <UniqueIdentifier>{7abf9cc2-5a40-4690-aa4e-3fdf351f0b61}</UniqueIdentifier>
+    <Filter Include="Network">
+      <UniqueIdentifier>{7d9b7f87-3ff5-4ae1-b33e-cda9d245efa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State">
+      <UniqueIdentifier>{c490e585-c844-4ec1-b236-0e12724e7760}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other">
+      <UniqueIdentifier>{6247fa1a-5379-4377-83d4-7d9cfa1094a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Request">
+      <UniqueIdentifier>{c7ad569d-8145-4129-8171-20a853757e36}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -30,17 +39,8 @@
     <ClCompile Include="main.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
-    <ClCompile Include="State.cpp">
-      <Filter>來源檔案</Filter>
-    </ClCompile>
-    <ClCompile Include="MapState.cpp">
-      <Filter>來源檔案</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>來源檔案</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerUI.cpp">
-      <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="PopUpWindow.cpp">
       <Filter>UI</Filter>
@@ -48,8 +48,47 @@
     <ClCompile Include="PointHoverUI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="InfoBox.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Communicator.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="MapState.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
     <ClCompile Include="centerText.cpp">
-      <Filter>Functions</Filter>
+      <Filter>Other</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectRequest.cpp">
+      <Filter>Network\Request</Filter>
+    </ClCompile>
+    <ClCompile Include="PurchaseRequest.cpp">
+      <Filter>Network\Request</Filter>
+    </ClCompile>
+    <ClCompile Include="Request.cpp">
+      <Filter>Network\Request</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopInformationRequest.cpp">
+      <Filter>Network\Request</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveRequest.cpp">
+      <Filter>Network\Request</Filter>
+    </ClCompile>
+    <ClCompile Include="Notification.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TeamPopUp.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TeamInformationRequest.cpp">
+      <Filter>Network\Request</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,29 +98,68 @@
     <ClInclude Include="Point.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
-    <ClInclude Include="State.h">
-      <Filter>標頭檔</Filter>
-    </ClInclude>
-    <ClInclude Include="MapState.h">
-      <Filter>標頭檔</Filter>
-    </ClInclude>
-    <ClInclude Include="MouseData.h">
-      <Filter>標頭檔</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerUI.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="PopUpWindow.h">
+    <ClInclude Include="InfoBox.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="PointHoverUI.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="PopUpWindow.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Communicator.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketProperties.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="MapState.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="Variables.h">
+      <Filter>Other</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseData.h">
+      <Filter>Other</Filter>
+    </ClInclude>
+    <ClInclude Include="constants.h">
+      <Filter>Other</Filter>
+    </ClInclude>
     <ClInclude Include="centerText.h">
-      <Filter>Functions</Filter>
+      <Filter>Other</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectRequest.h">
+      <Filter>Network\Request</Filter>
+    </ClInclude>
+    <ClInclude Include="PurchaseRequest.h">
+      <Filter>Network\Request</Filter>
+    </ClInclude>
+    <ClInclude Include="Request.h">
+      <Filter>Network\Request</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopInformationRequest.h">
+      <Filter>Network\Request</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveRequest.h">
+      <Filter>Network\Request</Filter>
+    </ClInclude>
+    <ClInclude Include="Notification.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TeamPopUp.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TeamInformationRequest.h">
+      <Filter>Network\Request</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

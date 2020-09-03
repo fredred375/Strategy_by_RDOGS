@@ -1,5 +1,6 @@
 #pragma once
 #include "MapState.h"
+#include "Communicator.h"
 class Game
 {
 private:
@@ -7,6 +8,12 @@ private:
 	sf::Event sfEvent;
 
 	MouseData mouseData;
+	Communicator* communicator;
+
+	sf::Clock clock;
+	float dt;
+
+	
 
 	sf::Clock clock;
 	float dt;
@@ -18,7 +25,7 @@ private:
 	void resizeView();
 	void render();
 public:
-	Game();
+	Game(sf::Uint8 teamID, std::string ip);
 	~Game();
 	void run();
 };

@@ -5,9 +5,9 @@ void Game::update()
 {
 	updateEvent();
 	dt = clock.restart().asSeconds();
-	if (dt > 1.f / 20.f)
+	if (dt > 1.f / constants::FRAMERATE_LOW)
 	{
-		dt = 1.f / 20.f;
+		dt = 1.f / constants::FRAMERATE_LOW;
 	}
 	if (!states.empty())
 	{
@@ -17,6 +17,7 @@ void Game::update()
 	{
 		window.close();
 	}
+	this->communicator->update();
 }
 
 void Game::updateEvent()
@@ -38,7 +39,8 @@ void Game::updateEvent()
 		case sf::Event::MouseButtonPressed:
 			if (sfEvent.mouseButton.button == sf::Mouse::Left || sfEvent.mouseButton.button == sf::Mouse::Right)
 			{
-				mouseData.oldMousePos = window.mapPixelToCoords(sf::Vector2i(sfEvent.mouseButton.x, sfEvent.mouseButton.y));
+				mouseData.oldMousePosPixel = sf::Vector2i(sfEvent.mouseButton.x, sfEvent.mouseButton.y);
+				mouseData.oldMousePos = window.mapPixelToCoords(mouseData.oldMousePosPixel);
 				if (!mouseData.leftPressed)
 				{
 					mouseData.mousePressedPos = sf::Vector2i(sfEvent.mouseButton.x, sfEvent.mouseButton.y);
@@ -47,7 +49,7 @@ void Game::updateEvent()
 				{
 					mouseData.leftPressed = true;
 				}
-				else
+				else if(sfEvent.mouseButton.button == sf::Mouse::Right)
 				{
 					mouseData.rightPressed = true;
 				}
@@ -67,8 +69,8 @@ void Game::updateEvent()
 			break;
 		case sf::Event::MouseMoved:
 			mouseData.moving = true;
-			mouseData.mousePos = window.mapPixelToCoords(sf::Vector2i(sfEvent.mouseMove.x, sfEvent.mouseMove.y));
 			mouseData.mousePosPixel = sf::Vector2i(sfEvent.mouseMove.x, sfEvent.mouseMove.y);
+			mouseData.mousePos = window.mapPixelToCoords(mouseData.mousePosPixel);
 
 			break;
 		case sf::Event::MouseWheelMoved:
@@ -81,13 +83,13 @@ void Game::updateEvent()
 void Game::resizeView()
 {
 	sf::Vector2u windowSize = window.getSize();
-	if (windowSize.x < 800)
+	if (windowSize.x < constants::WINDOW_WIDTH_SMALL)
 	{
-		windowSize.x = 800;
+		windowSize.x = constants::WINDOW_WIDTH_SMALL;
 	}
-	if (windowSize.y < 600)
+	if (windowSize.y < constants::WINDOW_HEIGHT_SMALL)
 	{
-		windowSize.y = 600;
+		windowSize.y = constants::WINDOW_HEIGHT_SMALL;
 	}
 	window.setSize(windowSize);
 	if (!states.empty())
@@ -107,28 +109,17 @@ void Game::render()
 	window.display();
 }
 
-Game::Game() :
-	window(sf::VideoMode::getDesktopMode(), "Strategy by RDOGS", sf::Style::Default), dt(0.f)
+Game::Game(sf::Uint8 teamID, std::string ip)
+	:
+	window(sf::VideoMode::getFullscreenModes().front(), "Strategy by RDOGS", sf::Style::Close | sf::Style::Titlebar), dt(0.f)
 {
+
 	sf::Image icon;
 	icon.loadFromFile("Resources/Textures/RDOGE.png");
 	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-	ShowWindow(window.getSystemHandle(), SW_MAXIMIZE);
+	this->communicator = new Communicator(ip, teamID);
+	states.push(new MapState(&window, &states, &mouseData, teamID, communicator));
 
-	sf::TcpSocket socket;
-	sf::Socket::Status status = socket.connect("127.0.0.1 ", 53000);
-	if (status != sf::Socket::Done)
-	{
-		printf("connection failed\n");
-	}
-	else
-	{
-		printf("connection successed!\n");
-	}
-
-
-
-	states.push(new MapState(&window, &states, &mouseData));
 }
 
 Game::~Game()

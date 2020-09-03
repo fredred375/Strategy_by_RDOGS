@@ -2,17 +2,19 @@
 #include "SFML\System.hpp"
 #include "SFML\Graphics.hpp"
 #include "SFML\Network.hpp"
-#include <Windows.h>
 #include <iostream>
 #include <string>
 #include <map>
+#include <list>
 #include <stack>
 #include <cmath>
+#include "constants.h"
 struct MouseData
 {
 	sf::Vector2f mousePos;
 	sf::Vector2f oldMousePos;
 	sf::Vector2i mousePosPixel;
+	sf::Vector2i oldMousePosPixel;
 	sf::Vector2i mousePressedPos;
 	int wheelTicks;
 

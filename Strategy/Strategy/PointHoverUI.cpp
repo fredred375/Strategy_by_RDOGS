@@ -1,7 +1,11 @@
 #include "PointHoverUI.h"
 
 PointHoverUI::PointHoverUI(sf::Font* font) :
+<<<<<<< HEAD
 	text(L"右鍵移動到此地點", *font, 1), activated(false), point(nullptr)
+=======
+	text("", *font, 1), activated(false), point(nullptr)
+>>>>>>> socket
 {
 	body.setFillColor(sf::Color::Black);
 }
@@ -9,6 +13,10 @@ PointHoverUI::PointHoverUI(sf::Font* font) :
 void PointHoverUI::setPoint(Point* point)
 {
 	this->point = point;
+<<<<<<< HEAD
+=======
+	text.setString(point->getName());
+>>>>>>> socket
 }
 
 void PointHoverUI::initDraw(sf::View view)

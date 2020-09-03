@@ -1,52 +1,64 @@
 #include "Point.h"
 #include "Player.h"
 
-Point::Point() :
-	body(20.f), name(name), price(price), owner(nullptr)
-{
-	body.setOrigin(body.getRadius(), body.getRadius());
-	body.setFillColor(sf::Color::Red);
-}
+//Point::Point() :
+//	body(20.f), ownerID(0), id(-1), capital(-1), prevRevenue(-1), transactionTimes(0), price(-1), updatePopUpInfo(false), bankrupt(false), texture()
+//{
+//	body.setOrigin(body.getRadius(), body.getRadius());
+//	body.setPosition(0, 0);
+//	body.setFillColor(sf::Color::Red);
+//}
 
-Point::Point(float x, float y, std::wstring name, int price) :
-	body(20.f), name(name), price(price), owner(nullptr)
+Point::Point(float x, float y, std::wstring name, int id, sf::Texture& texture, sf::Font* font) :
+	body(sf::Vector2f(40.f, 60.f)), name(name), ownerID(0), id(id), capital(-1), prevRevenue(-1), transactionTimes(0), price(-1), updatePopUpInfo(false), bankrupt(false), texture(texture), font(font),
+	text("", *font, 25)
 {
-	body.setOrigin(body.getRadius(), body.getRadius());
-	body.setPosition(x, y);
-	body.setFillColor(sf::Color::Red);
+	body.setOrigin(body.getSize().x / 2, body.getSize().y / 2);
+	body.setPosition(x, y - body.getSize().y / 2);
+	//this->texture.setSmooth(true);
+	body.setTexture(&this->texture);
+
+	text.setOrigin(text.getLocalBounds().width / 2.f, text.getLocalBounds().height / 2.f);
+	text.setPosition(x, y - body.getSize().y / 4 * 3 - 3);
+	//text.setCharacterSize(30);
+	text.setFillColor(sf::Color::Black);
+	centerText(text, text.getPosition());
+	
+	//text.setString("0");
 }
 
 void Point::draw(sf::RenderWindow* window)
 {
-	window->draw(body);
+	if (!bankrupt)
+	{
+		window->draw(body);
+		window->draw(text);
+	}
 }
 
 bool Point::clicked(float mouseX, float mouseY)
 {
-	if (mouseX - body.getPosition().x > body.getRadius() || mouseY - body.getPosition().y > body.getRadius())
+	if (!bankrupt)
 	{
-		return false;
-	}
-	else
-	{
-		float distance = sqrt(pow(mouseX - body.getPosition().x, 2) + pow(mouseY - body.getPosition().y, 2));
-		return (distance < body.getRadius() ? true : false);
+		if (mouseX - body.getPosition().x > body.getSize().x / 2 || mouseY - body.getPosition().y > body.getSize().y / 2)
+		{
+			return false;
+		}
+		else
+		{
+			float distance = sqrt(pow(mouseX - body.getPosition().x, 2) + pow(mouseY - body.getPosition().y, 2));
+			return (distance < body.getSize().x / 1.5f ? true : false);
+			//return true;
+		}
 	}
 	return false;
 }
 
-Player* Point::getOwner() const
-{
-	return owner;
-}
-
 void Point::purchased(Player* player)
 {
-	//send message to original owner
-
-	//send message to original owner
-
-	owner = player;
+	ownerID = player->getID();
+	this->text.setString(std::to_string(ownerID));
+	centerText(text, text.getPosition());
 }
 
 
