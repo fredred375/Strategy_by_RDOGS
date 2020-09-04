@@ -1,5 +1,6 @@
 #pragma once
 #include "MouseData.h"
+#include "Variables.h"
 #include "centerText.h"
 
 class Player;
@@ -12,13 +13,14 @@ private:
 	sf::Font* font;
 	std::wstring name;
 	std::vector<ShopTag> tag;
-	//sf::Clock notPurchasableClock;
+	sf::Clock nonPurchasableClock;
 	int id;
 	int ownerID;
 	int capital;
 	int price;
 	int prevRevenue;
 	int transactionTimes;
+	bool nonPurchasable;
 public:
 	bool updatePopUpInfo;
 	bool requestInfo;
@@ -35,6 +37,7 @@ public:
 		this->text.setString(std::to_string(ownerID));
 		centerText(text, text.getPosition());
 	}
+	void updateText();
 	sf::Vector2f getPosition() const { return body.getPosition(); }
 	int getID() const { return id; }
 	int getPrice() const { return price; }
@@ -54,5 +57,7 @@ public:
 	};
 	void setTexture(sf::Texture& texture) { this->body.setTexture(&texture); };
 	sf::Vector2f getSize() const { return body.getSize(); }
+	bool getNonPurchasable() { return this->nonPurchasable; };
+	void setNonPurchasable();
 };
 

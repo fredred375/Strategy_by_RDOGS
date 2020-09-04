@@ -10,7 +10,7 @@
 //}
 
 Point::Point(float x, float y, std::wstring name, int id, sf::Texture& texture, sf::Font* font) :
-	body(sf::Vector2f(40.f, 60.f)), name(name), ownerID(0), id(id), capital(-1), prevRevenue(-1), transactionTimes(0), price(-1), updatePopUpInfo(false), bankrupt(false), texture(texture), font(font), moveTime(0),
+	body(sf::Vector2f(40.f, 60.f)), name(name), ownerID(0), id(id), capital(-1), prevRevenue(-1), transactionTimes(0), price(-1), updatePopUpInfo(false), bankrupt(false), texture(texture), font(font), moveTime(0), nonPurchasable(false),
 	text("", *font, 25)
 {
 	body.setOrigin(body.getSize().x / 2, body.getSize().y);
@@ -45,11 +45,27 @@ bool Point::clicked(float mouseX, float mouseY)
 	return false;
 }
 
+void Point::updateText()
+{
+	if (this->nonPurchasableClock.getElapsedTime() > nonPurchasableTime)
+	{
+		this->nonPurchasable = false;
+		this->text.setFillColor(sf::Color::Black);
+	}
+}
+
 void Point::purchased(Player* player)
 {
 	ownerID = player->getID();
 	this->text.setString(std::to_string(ownerID));
 	centerText(text, text.getPosition());
+}
+
+void Point::setNonPurchasable()
+{
+	this->nonPurchasableClock.restart();
+	this->nonPurchasable = true;
+	this->text.setFillColor(sf::Color::Red);
 }
 
 

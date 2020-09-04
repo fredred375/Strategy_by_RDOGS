@@ -335,6 +335,14 @@ void MapState::update(const float& dt)
 		}
 		updateNotifList();
 	}
+	for (size_t i = 0; i < 75; ++i)
+	{
+		Point& point = this->points[i];
+		if (point.getNonPurchasable())
+		{
+			point.updateText();
+		}
+	}
 }
 
 void MapState::handleRecieves()
@@ -706,6 +714,7 @@ void MapState::onBroadcastTransaction(sf::Uint8 shopID, sf::Uint8 purchasingTeam
 	notifications.back()->setString(4, points.at(shopID - 1).getName());
 
 	points.at(shopID - 1).setOwnerID(purchasingTeamID);
+	points.at(shopID - 1).setNonPurchasable();
 }
 
 void MapState::onBroadcastMove(sf::Uint8 teamID, sf::Uint8 fromShopID, sf::Uint8 toShopID, sf::Uint16 duration)

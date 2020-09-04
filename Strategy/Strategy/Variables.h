@@ -23,6 +23,7 @@
 //sf::Uint8 teamIDGlobal = 0;
 
 const sf::Time requestTimeout = sf::milliseconds(5000); 
+const sf::Time nonPurchasableTime = sf::seconds(90);
 
 enum class CommunicatorStatus
 {
