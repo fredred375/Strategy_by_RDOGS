@@ -17,6 +17,8 @@ enum class GameEventType
 
 	NEXT_REV_PHASE,
 
+	PRINT_LEADER,
+
 	FINISH,
 };
 

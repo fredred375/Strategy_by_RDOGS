@@ -339,36 +339,46 @@ void Server::initEvents()
 		this->events.emplace(0, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(1, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(2, 0, GameEventType::SYNCHRONIZE);
+		this->events.emplace(2, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(3, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(4, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(5, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(5, 0, GameEventType::BANKRUPT);
 		this->events.emplace(8, 0, GameEventType::REVENUE);
 		this->events.emplace(10, 0, GameEventType::NEXT_REV_PHASE);
+		this->events.emplace(10, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(15, 0, GameEventType::BANKRUPT);
 		this->events.emplace(15, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(18, 0, GameEventType::REVENUE);
 		this->events.emplace(20, 0, GameEventType::NEXT_CAP_PHASE);
+		this->events.emplace(20, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(28, 0, GameEventType::REVENUE);
 		this->events.emplace(30, 0, GameEventType::SYNCHRONIZE);
+		this->events.emplace(30, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(35, 0, GameEventType::BANKRUPT);
 		this->events.emplace(40, 0, GameEventType::REVENUE);
 		this->events.emplace(40, 0, GameEventType::NEXT_REV_PHASE);
+		this->events.emplace(40, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(45, 0, GameEventType::NEXT_CAP_PHASE);
 		this->events.emplace(45, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(50, 0, GameEventType::REVENUE);
+		this->events.emplace(50, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(55, 0, GameEventType::BANKRUPT);
 		this->events.emplace(60, 0, GameEventType::REVENUE);
 		this->events.emplace(60, 0, GameEventType::NEXT_REV_PHASE);
+		this->events.emplace(60, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(60, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(65, 0, GameEventType::NEXT_CAP_PHASE);
 		this->events.emplace(70, 0, GameEventType::REVENUE);
+		this->events.emplace(70, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(75, 0, GameEventType::BANKRUPT);
 		this->events.emplace(75, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(80, 0, GameEventType::REVENUE);
 		this->events.emplace(80, 0, GameEventType::NEXT_REV_PHASE);
+		this->events.emplace(80, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(85, 0, GameEventType::BANKRUPT);
 		this->events.emplace(90, 0, GameEventType::REVENUE);
+		this->events.emplace(90, 0, GameEventType::PRINT_LEADER);
 	}
 	break;
 
@@ -866,6 +876,19 @@ void Server::updateEvents()
 			this->revPhase++;
 		}
 		break;
+
+		case GameEventType::PRINT_LEADER:
+		{
+			for (size_t i = 1; i <= numTeams; i++)
+			{
+				int asset = 0;
+
+				asset += this->teams[i]->getCash();
+				asset += this->teams[i]->getCapital();
+
+				this->print("LDER", "Team " + std::to_string(i) + " now has $" + std::to_string(asset) + " worth of asset!");
+			}
+		}	
 
 		default:
 			break;

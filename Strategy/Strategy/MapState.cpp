@@ -837,6 +837,7 @@ void MapState::onSell(sf::Uint8 shopID, sf::Uint8 purchasingTeamID, sf::Uint32 i
 
 	player->removeProperty(shopID);
 	player->setCash(cashBalance);
+	player->setCap(cap);
 }
 
 void MapState::onRevenue(sf::Int32 amount, std::vector<sf::Int32> byShop, sf::Uint32 cashBalance)

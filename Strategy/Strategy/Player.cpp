@@ -25,6 +25,7 @@ void Player::setPosition(Point* point)
 bool Player::removeProperty(int shopID)
 {
 	updateInfoBox = true;
+	updateCapUI = true;
 	for (int i = 0; i < properties.size(); i++)
 	{
 		if (properties.at(i)->getID() == shopID)
