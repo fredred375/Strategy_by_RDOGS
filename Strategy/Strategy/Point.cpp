@@ -13,18 +13,15 @@ Point::Point(float x, float y, std::wstring name, int id, sf::Texture& texture, 
 	body(sf::Vector2f(40.f, 60.f)), name(name), ownerID(0), id(id), capital(-1), prevRevenue(-1), transactionTimes(0), price(-1), updatePopUpInfo(false), bankrupt(false), texture(texture), font(font),
 	text("", *font, 25)
 {
-	body.setOrigin(body.getSize().x / 2, body.getSize().y / 2);
-	body.setPosition(x, y - body.getSize().y / 2);
+	body.setOrigin(body.getSize().x / 2, body.getSize().y);
+	body.setPosition(x, y - 30.f);
 	//this->texture.setSmooth(true);
 	body.setTexture(&this->texture);
 
 	text.setOrigin(text.getLocalBounds().width / 2.f, text.getLocalBounds().height / 2.f);
-	text.setPosition(x, y - body.getSize().y / 4 * 3 - 3);
+	text.setPosition(x, y - body.getSize().y * 0.75f);
 	//text.setCharacterSize(30);
 	text.setFillColor(sf::Color::Black);
-	centerText(text, text.getPosition());
-	
-	//text.setString("0");
 }
 
 void Point::draw(sf::RenderWindow* window)
@@ -40,15 +37,9 @@ bool Point::clicked(float mouseX, float mouseY)
 {
 	if (!bankrupt)
 	{
-		if (mouseX - body.getPosition().x > body.getSize().x / 2 || mouseY - body.getPosition().y > body.getSize().y / 2)
+		if (std::abs(body.getPosition().x - mouseX) <= body.getSize().x / 2 && mouseY >= body.getPosition().y - body.getSize().y && mouseY <= body.getPosition().y)
 		{
-			return false;
-		}
-		else
-		{
-			float distance = sqrt(pow(mouseX - body.getPosition().x, 2) + pow(mouseY - body.getPosition().y, 2));
-			return (distance < body.getSize().x / 1.5f ? true : false);
-			//return true;
+			return true;
 		}
 	}
 	return false;
