@@ -101,7 +101,9 @@ void PopUpWindow::initDraw(const sf::View& view)
 	if (tagNum == 0)
 	{
 		tagNum = 1;
-		tagsText.front().setString(L"µL");
+		tagsText.front ().setString (L"µL");
+		tagsText.front().setCharacterSize(windowBody.getSize().x / 60.f);
+		centerText(tagsText.front(), windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.69f, windowBody.getSize().y * 0.3016f));
 	}
 
 	for (int i = 0; i < tagNum; i++)
