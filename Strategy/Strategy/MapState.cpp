@@ -62,7 +62,7 @@ void MapState::initPoints()
 	points.emplace_back(4096.2f, 1282.3f, L"吳一無二法式甜點", shopIndex++, textures["locationMark"], &font);
 	points.emplace_back(3727.11f, 1092.02f, L"餘記麵館", shopIndex++, textures["locationMark"], &font);
 	points.emplace_back(2124.56f, 2801.34f, L"麥當勞 公館店", shopIndex++, textures["locationMark"], &font);
-	points.emplace_back(2124.56f, 2801.34f, L"鴉片粉圓", shopIndex++, textures["locationMark"], &font);
+	points.emplace_back(2013.7f, 2775.56f, L"鴉片粉圓", shopIndex++, textures["locationMark"], &font);
 	points.emplace_back(2242.89f, 3036.99f, L"墨洋拉麵", shopIndex++, textures["locationMark"], &font);
 	points.emplace_back(2267.7f, 2953.67f, L"茗香園冰室 公館店", shopIndex++, textures["locationMark"], &font);
 	points.emplace_back(1873.57f, 2610.54f, L"炸手指", shopIndex++, textures["locationMark"], &font);
@@ -106,16 +106,14 @@ void MapState::initPoints()
 		}
 	}
 
-
-	//for (auto point : points)
-	//{
-	//	point.setFont(&(this->font));
-	//}
-
-	points[20].setTexture(textures["locationMark1.10"]);
-	points[60].setTexture(textures["locationMark4.8"]);
-	points[70].setTexture(textures["locationMark4.9"]);
-	points[71].setTexture(textures["locationMark4.9"]);
+	// double tags
+	points[12 - 1].setTexture(textures["locationMark2.9"]);
+	points[16 - 1].setTexture(textures["locationMark2.8"]);
+	points[21 - 1].setTexture(textures["locationMark1.10"]);
+	points[24 - 1].setTexture(textures["locationMark1.10"]);
+	points[61 - 1].setTexture(textures["locationMark4.8"]);
+	points[71 - 1].setTexture(textures["locationMark4.9"]);
+	points[72 - 1].setTexture(textures["locationMark4.9"]);
 
 }
 
@@ -136,9 +134,13 @@ void MapState::initTextures()
 	textures["locationMark9"].loadFromFile("Resources/Textures/location_mark_9.png");
 	textures["locationMark10"].loadFromFile("Resources/Textures/location_mark_10.png");
 	textures["locationMark11"].loadFromFile("Resources/Textures/location_mark_11.png");
+	textures["locationMark12"].loadFromFile("Resources/Textures/location_mark_11.png");
 	textures["locationMark1.10"].loadFromFile("Resources/Textures/location_mark_1_10.png");
+	textures["locationMark2.8"].loadFromFile("Resources/Textures/location_mark_2_8.png");
+	textures["locationMark2.9"].loadFromFile("Resources/Textures/location_mark_2_9.png");
 	textures["locationMark4.8"].loadFromFile("Resources/Textures/location_mark_4_8.png");
 	textures["locationMark4.9"].loadFromFile("Resources/Textures/location_mark_4_9.png");
+	textures["locationMark4.10"].loadFromFile("Resources/Textures/location_mark_4_10.png");
 
 	textures["player"].loadFromFile("Resources/Textures/player_icon/player.png");
 	textures["team1"].loadFromFile("Resources/Textures/player_icon/team1.png");

@@ -141,7 +141,8 @@ sf::Uint32 Team::getRevenue(sf::Uint8 phase, std::vector<sf::Uint32>& byShop)
 	{
 		if (tagsCount[i] >= this->bonusThreshold[i])
 		{
-			total *= this->bonus[i];
+			total *= static_cast<int>(this->bonus[i] * 10); // float number inaccuarcy
+			total /= 10;
 		}
 	}
 
