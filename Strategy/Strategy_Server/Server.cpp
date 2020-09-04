@@ -501,7 +501,7 @@ void Server::handleRequests()
 						<< shop->getPrice(this->capPhase)
 						<< shop->getPrevRevenue(this->revPhase)
 						<< shop->getTransactionTimes()
-						<< this->shops[this->teams.at(i)->getPosition()->getID()]->getMoveTime(shop);
+						<< static_cast<sf::Uint16>((this->shops[this->teams.at(i)->getPosition()->getID()]->getMoveTime(shop)) * 60);
 
 					this->print("RSPN", "Responded an SHOP_INFORMATION request from team " + std::to_string(i));
 				}
