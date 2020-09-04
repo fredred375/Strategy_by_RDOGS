@@ -149,12 +149,20 @@ enum class SubType
 	// sf::Uint8 to
 	// sf::Uint16 duration
 
+	// SEND ---------------------------------
+
+
+	SEND_TAGS_COLLECTION_UPDATE,
+
+	// sf::Uint16 tagIndex
+	// double bonus
+	// bool lose
+
+
 	SEND_PRICE_UPDATE,
 
 	// sf::Int32 capital
 
-
-	// SEND ---------------------------------
 
 	SEND_PLAYER_INFORMATION, // sent on reconnecting initialization
 

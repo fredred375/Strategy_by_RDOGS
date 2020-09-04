@@ -419,9 +419,20 @@ void MapState::handleRecieves()
 			printf("received server send!\n");
 			switch (receivePacketProperties.subType)
 			{
+			case SubType::SEND_TAGS_COLLECTION_UPDATE:
+			{
+				printf("a tags collection update!\n");
+				sf::Uint16 tagIndex;
+				double bonus;
+				bool lose;
+				receivePacket >> tagIndex >> bonus >> lose;
+
+				this->onTagsCollectionUpdate(static_cast<ShopTag>(tagIndex), bonus, lose);
+			}
+			break;
 			case SubType::SEND_PRICE_UPDATE:
 			{
-				printf("a price update broadcast!\n");
+				printf("a price update send!\n");
 				sf::Int32 cap;
 				receivePacket >> cap;
 
@@ -717,6 +728,72 @@ void MapState::onBroadcastPriceUpdate(sf::Int32 cap)
 	notifications.back()->setString(2, L"你的商家總資本額現在是:");
 	notifications.back()->setString(3, std::to_wstring(cap) + L"元");
 
+}
+
+void MapState::onTagsCollectionUpdate(ShopTag tag, double bonus, bool lose)
+{
+	std::wstring tagName;
+
+	switch (tag)
+	{
+	case ShopTag::WENZHOU:
+		tagName = L"溫州商圈";
+		break;
+	case ShopTag::SHIDA:
+		tagName = L"師大商圈";
+		break;
+	case ShopTag::YIYIBA:
+		tagName = L"118巷";
+		break;
+	case ShopTag::GONGGUAN:
+		tagName = L"公館商圈";
+		break;
+	case ShopTag::FASTFOOD:
+		tagName = L"速食店";
+		break;
+	case ShopTag::STARBUCKS:
+		tagName = L"星巴克";
+		break;
+	case ShopTag::CURRY:
+		tagName = L"咖哩店";
+		break;
+	case ShopTag::RAMEN:
+		tagName = L"拉麵店";
+		break;
+	case ShopTag::HOTPOT:
+		tagName = L"火鍋店";
+		break;
+	case ShopTag::ICE:
+		tagName = L"冰店";
+		break;
+	case ShopTag::CHAMONIX:
+		tagName = L"夏慕尼";
+		break;
+	case ShopTag::MALA:
+		tagName = L"馬辣";
+		break;
+	case ShopTag::numShopTags:
+		break;
+	default:
+		break;
+	}
+
+	if (!lose)
+	{
+		notifications.push_back(new Notification(&font, &textures["notification"]));
+		notifications.back()->setPosition(sf::Vector2f(25.f, 2160.f - 420.f * notifications.size()));
+		notifications.back()->setTitle(tagName + L" 蒐集成功!");
+		notifications.back()->setString(1, L"你的營收金額將會乘以");
+		notifications.back()->setString(2, std::to_wstring(bonus) + L"倍!");
+	}
+
+	else
+	{
+		notifications.push_back(new Notification(&font, &textures["notification"]));
+		notifications.back()->setPosition(sf::Vector2f(25.f, 2160.f - 420.f * notifications.size()));
+		notifications.back()->setTitle(L"你的" + tagName + L" 蒐集被破壞了...");
+		notifications.back()->setString(1, L"你的營收金額將不再有加成");
+	}
 }
 
 void MapState::onPlayerInformation(sf::Int32 cash, sf::Int32 cap, std::vector<sf::Uint8> owenedShopsID, sf::Uint8 visitingShopID, sf::Uint8 prevVisitingShopID, bool moving, sf::Uint16 moveDuration)

@@ -36,8 +36,9 @@ private:
 
 	sf::Clock movingClock;
 
-	int numShopsBamkrupted = 0;
-	
+	int numShopsBankrupted = 0;
+
+	std::array<sf::Uint16, static_cast<int>(ShopTag::numShopTags)> numTagsCollected;
 
 
 	// Data
@@ -68,9 +69,9 @@ public:
 
 	void updateCapital(sf::Uint8 capPhase);
 
-	sf::Int32 purchase(Shop* shop, sf::Uint32 cost); // returns remaining cash
+	sf::Int32 purchase(Shop* shop, sf::Uint32 cost, std::vector<sf::Uint16>& bonusActivated); // returns remaining cash
 
-	sf::Int32 sell(Shop* shop, sf::Uint32 cost); // returns remaining cash
+	sf::Int32 sell(Shop* shop, sf::Uint32 cost, std::vector<sf::Uint16>& bonusDeactivated); // returns remaining cash
 
 	sf::Int32 receiveRevenue(sf::Int32 amount);
 
@@ -99,9 +100,10 @@ public:
 
 	void initFromBackup(TeamStatus status, sf::Int32 cash, std::vector<Shop*> shopsOwned, Shop* visitingShop, Shop* prevVisitingShop, sf::Time movingTime);
 
-	int getNumShopsBankrupted() { return this->numShopsBamkrupted; };
+	int getNumShopsBankrupted() { return this->numShopsBankrupted; };
 
-	void addNumShopsBankrupted() { this->numShopsBamkrupted++; }
+	void shopBankrupted(Shop* shop, std::vector<sf::Uint16>& bonusDeactivated);
+
+	double getBonus(sf::Uint16 tag) { return this->bonus.at(tag); };
 };
-
 

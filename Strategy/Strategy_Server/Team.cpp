@@ -1,17 +1,17 @@
 #include "Team.h"
 
 Team::Team()
-	: ID(0), cash(3000000), visitingShop(nullptr), previousVisitingShop(nullptr), movingTime(sf::Time::Zero), movingClock(sf::Clock()), status(TeamStatus::IDLE), capital(0)
+	: ID(0), cash(3000000), visitingShop(nullptr), previousVisitingShop(nullptr), movingTime(sf::Time::Zero), movingClock(sf::Clock()), status(TeamStatus::IDLE), capital(0), numTagsCollected({0})
 {
 }
 
 Team::Team(sf::Uint8 ID, Shop* startingPoint)
-	: ID(ID), cash(3000000), visitingShop(startingPoint), previousVisitingShop(nullptr), movingTime(sf::Time::Zero), movingClock(sf::Clock()), status(TeamStatus::IDLE), capital(0)
+	: ID(ID), cash(3000000), visitingShop(startingPoint), previousVisitingShop(nullptr), movingTime(sf::Time::Zero), movingClock(sf::Clock()), status(TeamStatus::IDLE), capital(0), numTagsCollected({0})
 {
 }
 
 Team::Team(sf::Uint8 ID, std::vector<Shop*> shopsOwned, TeamStatus status, sf::Int32 cash, Shop* visitingShop, Shop* prevVisitingShop, sf::Time movingTime)
-	: ID(ID), shopsOwned(shopsOwned), status(status), cash(cash), visitingShop(visitingShop), previousVisitingShop(prevVisitingShop), movingTime(movingTime), capital(0)
+	: ID(ID), shopsOwned(shopsOwned), status(status), cash(cash), visitingShop(visitingShop), previousVisitingShop(prevVisitingShop), movingTime(movingTime), capital(0), numTagsCollected({0})
 {
 }
 
@@ -46,18 +46,37 @@ void Team::updateCapital(sf::Uint8 capPhase)
 	}
 }
 
-sf::Int32 Team::purchase(Shop* shop, sf::Uint32 cost)
+sf::Int32 Team::purchase(Shop* shop, sf::Uint32 cost, std::vector<sf::Uint16>& bonusActivated)
 {
 	this->cash -= cost;
 	this->shopsOwned.push_back(shop);
+
+	for(auto tag : shop->getTags())
+	{
+		++this->numTagsCollected.at(static_cast<sf::Uint16>(tag));
+		if (this->numTagsCollected.at(static_cast<sf::Uint16>(tag)) == this->bonusThreshold.at(static_cast<sf::Uint16>(tag)))
+		{
+			bonusActivated.emplace_back(static_cast<sf::Uint16>(tag));
+		}
+	}
+
 	return this->cash;
 }
 
-sf::Int32 Team::sell(Shop* shop, sf::Uint32 cost)
+sf::Int32 Team::sell(Shop* shop, sf::Uint32 cost, std::vector<sf::Uint16>& bonusDeactivated)
 {
 	this->cash += cost;
 	this->shopsOwned.erase(std::remove(this->shopsOwned.begin(), this->shopsOwned.end(), shop), this->shopsOwned.end());
-	//shop->transaction(this->ID);
+
+	for(auto tag : shop->getTags())
+	{
+		--this->numTagsCollected.at(static_cast<sf::Uint16>(tag));
+		if (this->numTagsCollected.at(static_cast<sf::Uint16>(tag)) == this->bonusThreshold.at(static_cast<sf::Uint16>(tag)) - 1)
+		{
+			bonusDeactivated.emplace_back(static_cast<sf::Uint16>(tag));
+		}
+	}
+	
 	return this->cash;
 }
 
@@ -138,6 +157,19 @@ void Team::initFromBackup(TeamStatus status, sf::Int32 cash, std::vector<Shop*> 
 	this->visitingShop = visitingShop;
 	this->previousVisitingShop = prevVisitingShop;
 	this->movingTime = movingTime;
+}
+
+void Team::shopBankrupted(Shop* shop, std::vector<sf::Uint16>& bonusDeactivated)
+{
+	this->numShopsBankrupted++; 
+	for(auto tag : shop->getTags())
+	{
+		--this->numTagsCollected.at(static_cast<size_t>(tag));
+		if (this->numTagsCollected.at(static_cast<size_t>(tag)) == this->bonusThreshold.at(static_cast<sf::Uint16>(tag)) - 1)
+		{
+			bonusDeactivated.emplace_back(static_cast<sf::Uint16>(tag));
+		}
+	}
 }
 
 

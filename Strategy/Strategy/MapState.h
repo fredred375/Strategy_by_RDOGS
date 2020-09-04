@@ -53,10 +53,13 @@ private:
     void onBroadcastPriceUpdate(sf::Int32 cap);
 
     // On server send
+    void onTagsCollectionUpdate(ShopTag tag, double bonus, bool lose);
     void onPlayerInformation(sf::Int32 cash, sf::Int32 cap, std::vector<sf::Uint8> owenedShopsID, sf::Uint8 visitingShopID, sf::Uint8 prevVisitingShopID, bool moving, sf::Uint16 moveDuration);
     void onSell(sf::Uint8 shopID, sf::Uint8 purchasingTeamID, sf::Uint32 income, sf::Int32 cashBalance, sf::Int32 cap);
     void onRevenue(sf::Int32 amount, std::vector<sf::Int32> byShop, sf::Uint32 cashBalance);
     void onBankrupt(sf::Uint8 shopID, sf::Int32 cap);
+
+    // void pushNotification(); //TODO
 
 
 public:

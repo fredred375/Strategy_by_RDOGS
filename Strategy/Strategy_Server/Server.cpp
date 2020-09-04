@@ -461,11 +461,11 @@ void Server::handleRequests()
 	{
 		if (this->communicator->newRequest(i))
 		{
-			sf::Packet receivePacket, broadcastPacket;
-			std::vector<sf::Packet> sendPackets;
+			sf::Packet receivePacket;
+			std::vector<sf::Packet> sendPackets, broadcastPackets;
 			std::vector<sf::Uint8> sendTeams;
 
-			bool broadcast = false;
+			//bool broadcast = false;
 
 			sendPackets.emplace_back();
 			sendTeams.emplace_back(i);
@@ -484,7 +484,7 @@ void Server::handleRequests()
 
 				if (shopID <= 0 || shopID > numShops) // invalid ID
 				{
-					sendPackets[0] 
+					sendPackets.back()
 						<< PacketProperties(receivePacketProperties.ID, PacketType::RESPONSE, SubType::RESPONSE_SHOP_INFORMATION, RequestValidity::INVALID_SHOP_ID);
 
 					this->print("RSPN", "Denied an invalid SHOP_INFORMATION request from team " + std::to_string(i) + ": INVALID_SHOP_ID");
@@ -493,7 +493,7 @@ void Server::handleRequests()
 				else // valid
 				{
 					Shop* shop = this->shops.at(shopID);
-					sendPackets[0]
+					sendPackets.back()
 						<< PacketProperties(receivePacketProperties.ID, PacketType::RESPONSE, SubType::RESPONSE_SHOP_INFORMATION, RequestValidity::VALID)
 						<< shop->getID()
 						<< shop->getOwnerID()
@@ -518,13 +518,13 @@ void Server::handleRequests()
 
 				if (teams[i]->getStatus() == TeamStatus::MOVING) // not on site
 				{
-					sendPackets[0] 
+					sendPackets.back() 
 						<< PacketProperties(receivePacketProperties.ID, PacketType::RESPONSE, SubType::RESPONSE_SHOP_PURCHASE, RequestValidity::NOT_ON_SITE) 
 						<< shopID;
 
 					sendTeams.emplace_back(i);
 					sendPackets.emplace_back();
-					sendPackets[1]
+					sendPackets.back()
 						<< PacketProperties(this->communicator->getCurrentSendID(), PacketType::SEND, SubType::SEND_ERROR)
 						<< sf::String(L"還不能買店家啦，")
 						<< sf::String(L"你還沒到達定位喔!")
@@ -540,34 +540,60 @@ void Server::handleRequests()
 					sf::Uint32 price = requestedShop->getPrice(this->capPhase);
 					if (this->teams[i]->getCash() >= price) // valid
 					{
-						sendPackets[0] 
+						std::vector<sf::Uint16> bonusActivated, bonusDeactivated;
+
+						sendPackets.back()
 							<< PacketProperties(receivePacketProperties.ID, PacketType::RESPONSE, SubType::RESPONSE_SHOP_PURCHASE, RequestValidity::VALID) 
 							<< shopID 
 							<< requestedShop->getOwnerID() // 0 for none
 							<< price 
-							<< this->teams[i]->purchase(requestedShop, price);
+							<< this->teams[i]->purchase(requestedShop, price, bonusActivated);
 						this->teams[i]->updateCapital(this->capPhase);
-						sendPackets[0]
+						sendPackets.back()
 							<< this->teams[i]->getCapital();
+
+						for (auto bonus : bonusActivated)
+						{
+							sendTeams.emplace_back(i);
+							sendPackets.emplace_back();
+							
+							sendPackets.back()
+								<< PacketProperties(receivePacketProperties.ID, PacketType::SEND, SubType::SEND_TAGS_COLLECTION_UPDATE)
+								<< bonus
+								<< teams[1]->getBonus(bonus)
+								<< false;
+						}
 
 
 						if (requestedShop->getOwnerID()) //  buy from another team
 						{
 							sendTeams.emplace_back(requestedShop->getOwnerID());
 							sendPackets.emplace_back();
-							sendPackets[1]
+							sendPackets.back()
 								<< PacketProperties(this->communicator->getCurrentSendID(), PacketType::SEND, SubType::SEND_SELL)
 								<< shopID
 								<< static_cast<sf::Uint8>(i)
 								<< price
-								<< this->teams[requestedShop->getOwnerID()]->sell(requestedShop, price);
+								<< this->teams[requestedShop->getOwnerID()]->sell(requestedShop, price, bonusDeactivated);
 							this->teams[requestedShop->getOwnerID()]->updateCapital(this->capPhase);
-							sendPackets[1]
+							sendPackets.back()
 								<< this->teams[requestedShop->getOwnerID()]->getCapital();
+
+							for (auto bonus : bonusDeactivated)
+							{
+								sendTeams.emplace_back(requestedShop->getOwnerID());
+								sendPackets.emplace_back();
+
+								sendPackets.back()
+									<< PacketProperties(receivePacketProperties.ID, PacketType::SEND, SubType::SEND_TAGS_COLLECTION_UPDATE)
+									<< bonus
+									<< teams[1]->getBonus(bonus)
+									<< true;
+							}
 						}
 
-						broadcast = true;
-						broadcastPacket
+						broadcastPackets.emplace_back();
+						broadcastPackets.back()
 							<< PacketProperties(this->communicator->getCurrentBroadcastID(), PacketType::BROADCAST, SubType::BROADCAST_TRANSACTION)
 							<< shopID
 							<< static_cast<sf::Uint8>(i)
@@ -586,7 +612,7 @@ void Server::handleRequests()
 					else // insufficient cash
 					{
 						
-						sendPackets[0]
+						sendPackets.back()
 							<< PacketProperties(receivePacketProperties.ID, PacketType::RESPONSE, SubType::RESPONSE_SHOP_PURCHASE, RequestValidity::INSUFFICIENT_CASH)
 							<< shopID 
 							<< price - this->teams[i]->getCash(); // shortage
@@ -594,7 +620,7 @@ void Server::handleRequests()
 
 						sendTeams.emplace_back(i);
 						sendPackets.emplace_back();
-						sendPackets[1]
+						sendPackets.back()
 							<< PacketProperties(this->communicator->getCurrentSendID(), PacketType::SEND, SubType::SEND_ERROR)
 							<< sf::String(L"你的錢不夠，沒辦法買這家店...")
 							<< sf::String(L"再存" + std::to_wstring(price - this->teams[i]->getCash()) + L"元")
@@ -606,14 +632,14 @@ void Server::handleRequests()
 
 				else // frequent purchase
 				{
-					sendPackets[0] 
+				    sendPackets.back()
 						<< PacketProperties(receivePacketProperties.ID, PacketType::RESPONSE, SubType::RESPONSE_SHOP_PURCHASE, RequestValidity::FREQUENT_PURCHASE) 
 						<< shopID;
 					this->print("RSPN", "Responded an invalid SHOP_PURCHASE request from team " + std::to_string(i) + ": FREQUENT_PURCHASE");
 					
 					sendTeams.emplace_back(i);
 					sendPackets.emplace_back();
-					sendPackets[1]
+					sendPackets.back()
 						<< PacketProperties(this->communicator->getCurrentSendID(), PacketType::SEND, SubType::SEND_ERROR)
 						<< sf::String(L"這家店才剛被買下來")
 						<< sf::String(L"或被店主造訪過，")
@@ -628,7 +654,7 @@ void Server::handleRequests()
 			{
 				if (this->teams[i]->getStatus() == TeamStatus::MOVING) // moving
 				{
-					sendPackets[0]
+					sendPackets.back()
 						<< PacketProperties(receivePacketProperties.ID, PacketType::RESPONSE, SubType::RESPONSE_MOVE, RequestValidity::MOVING);
 					this->print("RSPN", "Denied an invalid MOVE request from team " + std::to_string(i) + ": MOVING");
 				}
@@ -642,13 +668,13 @@ void Server::handleRequests()
 					Shop* requestedShop = this->shops[shopID];
 					sf::Uint16 duration = (this->teams[i]->move(requestedShop)).asSeconds();
 
-					sendPackets[0]
+					sendPackets.back()
 						<< PacketProperties(receivePacketProperties.ID, PacketType::RESPONSE, SubType::RESPONSE_MOVE, RequestValidity::VALID)
 						<< shopID 
 						<< duration;
 
-					broadcast = true;
-					broadcastPacket
+					broadcastPackets.emplace_back();
+					broadcastPackets.back()
 						<< PacketProperties(this->communicator->getCurrentBroadcastID(), PacketType::BROADCAST, SubType::BROADCAST_MOVE)
 						<< static_cast<sf::Uint8>(i)
 						<< this->teams[i]->getPrevPosition()->getID()
@@ -670,7 +696,7 @@ void Server::handleRequests()
 				Team* requestedTeam = this->teams[teamID];
 				std::vector<Shop*> shopsOwned = requestedTeam->getShopsOwned();
 
-				sendPackets[0]
+				sendPackets.back()
 					<< PacketProperties(receivePacketProperties.ID, PacketType::RESPONSE, SubType::RESPONSE_TEAM_INFORMATION, RequestValidity::VALID)
 					<< teamID
 					<< requestedTeam->getCash()
@@ -681,12 +707,12 @@ void Server::handleRequests()
 				{
 					if (!shop->getBankrupt())
 					{
-						sendPackets[0]
+						sendPackets.back()
 							<< shop->getID();
 					}
 				}
 				
-				sendPackets[0]
+				sendPackets.back()
 					<< requestedTeam->getPosition()->getID();
 					/*<< requestedTeam->getPrevPosition()->getID()
 					<< (requestedTeam->getStatus() == TeamStatus::MOVING)
@@ -703,7 +729,7 @@ void Server::handleRequests()
 				this->communicator->send(sendTeams[j], sendPackets[j]);
 			}
 			
-			if (broadcast)
+			for (auto broadcastPacket : broadcastPackets)
 			{
 				this->communicator->broadcast(broadcastPacket);
 			}
@@ -779,14 +805,10 @@ void Server::updateEvents()
 			
 			for (size_t i = 0; i < shops.size(); i++)
 			{
-				shops[i]->bankrupt();
+				Shop* shop = shops.at(i);
+				shop->bankrupt();
 
-				if (shops[i]->getOwnerID() != 0)
-				{
-					teams[shops[i]->getOwnerID()]->addNumShopsBankrupted();
-				}
-
-				sf::Uint8 shopID = shops[i]->getID();
+				sf::Uint8 shopID = shop->getID();
 				sf::Packet broadcastingPacket, sendPacket;
 
 				// Broadcast
@@ -798,15 +820,27 @@ void Server::updateEvents()
 
 				// Send
 
-				if (shops[i]->getOwnerID() != 0) // owned
+				if (shop->getOwnerID() != 0) // owned
 				{
+					std::vector<sf::Uint16> bonusDeactivated;
+					teams[shop->getOwnerID()]->shopBankrupted(shop, bonusDeactivated);
 					teams[shops[i]->getOwnerID()]->updateCapital(this->capPhase);
 					sendPacket
 						<< PacketProperties(this->communicator->getCurrentSendID(), PacketType::SEND, SubType::SEND_BANKRUPT)
 						<< shopID
-						<< teams[shops[i]->getOwnerID()]->getCapital();
+						<< teams[shop->getOwnerID()]->getCapital();
 
-					this->communicator->send(shops[i]->getOwnerID(), sendPacket);
+					this->communicator->send(shop->getOwnerID(), sendPacket);
+
+					for (auto bonus : bonusDeactivated)
+					{
+						sf::Packet sendPacket;
+						sendPacket
+							<< PacketProperties(this->communicator->getCurrentSendID(), PacketType::SEND, SubType::SEND_TAGS_COLLECTION_UPDATE)
+							<< bonus
+							<< teams[1]->getBonus(bonus)
+							<< true;
+					}
 				}
 			}
 		}
