@@ -80,5 +80,6 @@ public:
 		text.setFont(*this->font);
 	};
 	void setTexture(sf::Texture& texture) { this->body.setTexture(&texture); };
+	sf::Vector2f getSize() const { return body.getSize(); }
 };
 

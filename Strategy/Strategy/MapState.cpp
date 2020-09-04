@@ -241,7 +241,7 @@ void MapState::checkPointsClicked()
 			}
 			else
 			{
-				if (!pointHoverUI->activated)
+				if (!pointHoverUI->activated || pointHoverUI->getPoint() != &point)
 				{
 					pointHoverUI->activated = true;
 					pointHoverUI->setPoint(&point);

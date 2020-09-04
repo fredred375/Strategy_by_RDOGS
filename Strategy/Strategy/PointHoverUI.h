@@ -10,6 +10,7 @@ public:
 	bool activated;
 	PointHoverUI(sf::Font* font);
 	void setPoint(Point* point);
+	Point* getPoint() const { return point; }
 	void initDraw(sf::View view);
 	void draw(sf::RenderWindow* window);
 };
