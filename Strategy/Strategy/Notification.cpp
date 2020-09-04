@@ -1,7 +1,7 @@
 #include "Notification.h"
 #include "centerText.h"
 
-Notification::Notification(sf::Font* font, sf::Texture* texture) : body(*texture), font(font), texture(texture), textList(4 , sf::Text(L"", *font, 36)), span(10.f), faint(5.f), titleText(L"", *font, 48)
+Notification::Notification(sf::Font* font, sf::Texture* texture) : body(*texture), font(font), texture(texture), textList(4 , sf::Text(L"", *font, 36)), span(10.f), faint(2.5f), titleText(L"", *font, 48)
 {
 	titleText.setStyle(sf::Text::Bold);
 }
