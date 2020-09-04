@@ -492,14 +492,16 @@ void Server::handleRequests()
 
 				else // valid
 				{
-					sendPackets[0] 
-						<< PacketProperties(receivePacketProperties.ID, PacketType::RESPONSE, SubType::RESPONSE_SHOP_INFORMATION, RequestValidity::VALID) 
-						<< this->shops[shopID]->getID() 
-						<< this->shops[shopID]->getOwnerID() 
-						<< this->shops[shopID]->getCapital(this->capPhase) 
-						<< this->shops[shopID]->getPrice(this->capPhase) 
-						<< this->shops[shopID]->getPrevRevenue(this->revPhase) 
-						<< this->shops[shopID]->getTransactionTimes();
+					Shop* shop = this->shops.at(shopID);
+					sendPackets[0]
+						<< PacketProperties(receivePacketProperties.ID, PacketType::RESPONSE, SubType::RESPONSE_SHOP_INFORMATION, RequestValidity::VALID)
+						<< shop->getID()
+						<< shop->getOwnerID()
+						<< shop->getCapital(this->capPhase)
+						<< shop->getPrice(this->capPhase)
+						<< shop->getPrevRevenue(this->revPhase)
+						<< shop->getTransactionTimes()
+						<< this->shops[this->teams.at(i)->getPosition()->getID()]->getMoveTime(shop);
 
 					this->print("RSPN", "Responded an SHOP_INFORMATION request from team " + std::to_string(i));
 				}

@@ -158,47 +158,48 @@ enum class SubType
 
 	SEND_PLAYER_INFORMATION, // sent on reconnecting initialization
 
-							 // sf::Int32 cash
-							 // sf::Int32 capital
-							 // sf::Uint16 numShopsOwned
-							 // sf::Uint8 ownedShopsID * numShopsOwned
-							 // sf::Uint8 visitingShopID
-							 // sf::Uint8 prevVisitingShopID
-							 // bool moving
-							 // sf::Uint16 duration (as seconds) (0 if not moving)
+	// sf::Int32 cash
+	// sf::Int32 capital
+	// sf::Uint16 numShopsOwned
+	// sf::Uint8 ownedShopsID * numShopsOwned
+	// sf::Uint8 visitingShopID
+	// sf::Uint8 prevVisitingShopID
+	// bool moving
+	// sf::Uint16 duration (as seconds) (0 if not moving)
 
-							 SEND_MOVE, // sent on reconnecting initialization
-										// sf::Uint8 teamID
-										// sf::Uint8 from
-										// sf::Uint8 to
-										// sf::Uint16 duration
+	 SEND_MOVE, // sent on reconnecting initialization
 
-										SEND_SELL,
+	// sf::Uint8 teamID
+	// sf::Uint8 from
+	// sf::Uint8 to
+	// sf::Uint16 duration
 
-										// sf::Uint8 shopID,
-										// sf::Uint8 purchasingTeamID,
-										// sf::Uint32 income
-										// sf::Int32 cashBalance
-										// sf::Int32 capital
+	SEND_SELL,
 
-										SEND_REVENUE,
+	// sf::Uint8 shopID,
+	// sf::Uint8 purchasingTeamID,
+	// sf::Uint32 income
+	// sf::Int32 cashBalance
+	// sf::Int32 capital
 
-										// sf::Int32 amount
-										// std::vector<sf::Int32> byShop
-										// sf::Uint32 cashBalance
+	SEND_REVENUE,
 
-										SEND_BANKRUPT,
+	// sf::Int32 amount
+	// std::vector<sf::Int32> byShop
+	// sf::Uint32 cashBalance
 
-										// sf::Uint8 shopID
-										// sf::Int32 capital
+	SEND_BANKRUPT,
 
-										SEND_ERROR,
+	// sf::Uint8 shopID
+	// sf::Int32 capital
 
-										// sf::String line1
-										// sf::String line2
-										// sf::String line3
-										// sf::String line4
-										// sf::String line5
+	SEND_ERROR,
+
+	// sf::String line1
+	// sf::String line2
+	// sf::String line3
+	// sf::String line4
+	// sf::String line5
 };
 
 enum class RequestValidity
