@@ -4,6 +4,7 @@
 void PopUpWindow::setPoint(Point* point)
 {
 	this->point = point;
+	tagNum = point->getTag().size();
 	communicator->requestShopInformation(point);
 }
 
@@ -48,6 +49,66 @@ void PopUpWindow::initDraw(const sf::View& view)
 	transactionText.setCharacterSize(windowBody.getSize().x / 25.f);
 	centerTextRight(transactionText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.44f, windowBody.getSize().y * 0.485f));
 
+	moveText.setString(L"¸ü¤J¤¤");
+	moveText.setCharacterSize(windowBody.getSize().x / 25.f);
+	centerTextRight(moveText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.94f, windowBody.getSize().y / 10.f * 5.88f));
+
+	for (int i = 0; i < tagNum; i++)
+	{
+		switch (point->getTag().at(i))
+		{
+		case ShopTag::WENZHOU:
+			tagsText.at(i).setString(L"·Å¦{");
+			break;
+		case ShopTag::SHIDA:
+			tagsText.at(i).setString(L"®v¤j");
+			break;
+		case ShopTag::YIYIBA:
+			tagsText.at(i).setString(L"118");
+			break;
+		case ShopTag::GONGGUAN:
+			tagsText.at(i).setString(L"¤½À]");
+			break;
+		case ShopTag::FASTFOOD:
+			tagsText.at(i).setString(L"³t­¹");
+			break;
+		case ShopTag::STARBUCKS:
+			tagsText.at(i).setString(L"¬P¤Ú§J");
+			break;
+		case ShopTag::CURRY:
+			tagsText.at(i).setString(L"©@­ù");
+			break;
+		case ShopTag::RAMEN:
+			tagsText.at(i).setString(L"©ÔÄÑ");
+			break;
+		case ShopTag::HOTPOT:
+			tagsText.at(i).setString(L"¤õÁç");
+			break;
+		case ShopTag::ICE:
+			tagsText.at(i).setString(L"¦B©±");
+			break;
+		case ShopTag::CHAMONIX:
+			tagsText.at(i).setString(L"®L¼}¥§");
+			break;
+		case ShopTag::MALA:
+			tagsText.at(i).setString(L"°¨»¶");
+			break;
+		}
+		tagsText.at(i).setCharacterSize(windowBody.getSize().x / 60.f);
+		centerText(tagsText.at(i), windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.69f, windowBody.getSize().y * (0.3016f + 80.f / 810.f * i)));
+	}
+
+	if (tagNum == 0)
+	{
+		tagNum = 1;
+		tagsText.front().setString(L"µL");
+	}
+
+	for (int i = 0; i < tagNum; i++)
+	{
+		tagsBody.at(i).setSize(sf::Vector2f(windowBody.getSize().x * 0.0926f, windowBody.getSize().y * 0.068f));
+		tagsBody.at(i).setPosition(windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.6574f, windowBody.getSize().y * (0.2716f + 80.f / 810.f * i)));
+	}
 }
 
 void PopUpWindow::checkMouseData(MouseData* mouseData)
@@ -197,14 +258,18 @@ void PopUpWindow::updateText()
 
 		priceText.setString(std::to_string(point->getPrice()));
 		centerTextRight(priceText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.44f, windowBody.getSize().y * 0.5837f));
-		updateOwnership();
+		
 
+		moveText.setString(std::to_wstring(point->moveTime) + L"¬í");
+		centerTextRight(moveText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.94f, windowBody.getSize().y / 10.f * 5.88f));
+
+		updateOwnership();
 		point->updatePopUpInfo = false;
 	}
 }
 
 PopUpWindow::PopUpWindow(Player* player, sf::Font* font, Communicator* communicator) :
-	activated(false), font(font), player(player), point(nullptr), canPurchase(false), communicator(communicator)
+	activated(false), font(font), player(player), point(nullptr), canPurchase(false), communicator(communicator), tagsBody(2, sf::RectangleShape()), tagsText(2, sf::Text()), tagNum(0)
 {
 	nameText.setFont(*font);
 	nameText.setStyle(sf::Text::Bold);
@@ -220,6 +285,13 @@ PopUpWindow::PopUpWindow(Player* player, sf::Font* font, Communicator* communica
 	transactionText.setFont(*font);
 	transactionText.setFillColor(sf::Color(26, 115, 232));
 	transactionText.setStyle(sf::Text::Bold);
+	moveText.setFont(*font);
+	moveText.setFillColor(sf::Color(26, 115, 232));
+	moveText.setStyle(sf::Text::Bold);
+	for (auto& tagText : tagsText)
+	{
+		tagText.setFont(*font);
+	}
 
 	if (windowTexture.loadFromFile("Resources/Textures/UI/PopUpWindow/windowBody.png"))
 	{
@@ -248,6 +320,13 @@ PopUpWindow::PopUpWindow(Player* player, sf::Font* font, Communicator* communica
 	{
 		closeBody.setTexture(&closeTexture);
 	}
+	if (tagTexture.loadFromFile("Resources/Textures/UI/PopUpWindow/tag.png"))
+	{
+		for (auto& tagBody : tagsBody)
+		{
+			tagBody.setTexture(&tagTexture);
+		}
+	}
 }
 
 void PopUpWindow::draw(sf::RenderWindow* window)
@@ -263,4 +342,10 @@ void PopUpWindow::draw(sf::RenderWindow* window)
 	window->draw(capitalText);
 	window->draw(transactionText);
 	window->draw(prevRevenueText);
+	window->draw(moveText);
+	for (int i = 0; i < tagNum; i++)
+	{
+		window->draw(tagsBody.at(i));
+		window->draw(tagsText.at(i));
+	}
 }

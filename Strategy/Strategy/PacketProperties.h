@@ -65,6 +65,7 @@ enum class SubType
 	// sf::Uint32 price,
 	// sf::Uint32 prevRevenue,
 	// sf::Uint16 transactionTimes
+	// sf::Uint16 duration
 
 	// [INVALID_SHOP_ID]
 	// (nothing)
@@ -98,7 +99,7 @@ enum class SubType
 	RESPONSE_MOVE,
 
 	// sf::Uint8 shopID
-	// float duration
+	// sf::Uint16 duration
 
 	// [MOVING]
 	// (nothing)

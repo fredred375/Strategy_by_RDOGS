@@ -2,35 +2,6 @@
 #include "MouseData.h"
 #include "centerText.h"
 
-enum class ShopTag
-{
-	WENZHOU = 0,
-
-	SHIDA = 1,
-
-	YIYIBA = 2,
-
-	GONGGUAN = 3,
-
-	FASTFOOD = 4,
-
-	STARBUCKS = 5,
-
-	CURRY = 6,
-
-	RAMEN = 7,
-
-	HOTPOT = 8,
-
-	ICE = 9,
-
-	CHAMONIX = 10,
-
-	MALA = 11,
-
-	numShopTags
-};
-
 class Player;
 class Point
 {
@@ -40,7 +11,7 @@ private:
 	sf::Text text;
 	sf::Font* font;
 	std::wstring name;
-	std::list<ShopTag> tag;
+	std::vector<ShopTag> tag;
 	//sf::Clock notPurchasableClock;
 	int id;
 	int ownerID;
@@ -52,6 +23,7 @@ public:
 	bool updatePopUpInfo;
 	bool requestInfo;
 	bool bankrupt;
+	int moveTime;
 	//Point();
 	Point(float x, float y, std::wstring name, int id, sf::Texture& texture, sf::Font* font);
 	std::wstring getName() const { return name; }
@@ -75,6 +47,7 @@ public:
 	void setTransactionTimes(int transactionTimes) { this->transactionTimes = transactionTimes; }
 	void purchased(Player* player);
 	void setTag(int tag) { this->tag.push_back(static_cast<ShopTag>(tag)); };
+	std::vector<ShopTag>& getTag() { return tag; }
 	void setFont(sf::Font* font) {
 		this->font = font; 
 		text.setFont(*this->font);

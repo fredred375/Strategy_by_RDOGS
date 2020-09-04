@@ -29,3 +29,31 @@ namespace constants
 
 
 }
+enum class ShopTag
+{
+	WENZHOU = 0,
+
+	SHIDA = 1,
+
+	YIYIBA = 2,
+
+	GONGGUAN = 3,
+
+	FASTFOOD = 4,
+
+	STARBUCKS = 5,
+
+	CURRY = 6,
+
+	RAMEN = 7,
+
+	HOTPOT = 8,
+
+	ICE = 9,
+
+	CHAMONIX = 10,
+
+	MALA = 11,
+
+	numShopTags
+};

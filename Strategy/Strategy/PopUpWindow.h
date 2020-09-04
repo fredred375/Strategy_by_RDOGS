@@ -11,17 +11,24 @@ private:
 	sf::RectangleShape purchaseBody;
 	sf::RectangleShape moveBody;
 
+	std::vector<sf::RectangleShape> tagsBody;
+	std::vector<sf::Text> tagsText;
+	int tagNum;
+
+
 	sf::Font* font;
 	sf::Texture windowTexture;
 	sf::Texture ownershipTexture;
 	sf::Texture closeTexture;
 	sf::Texture purchaseTexture;
 	sf::Texture moveTexture;
+	sf::Texture tagTexture;
 	sf::Text nameText;
 	sf::Text priceText;
 	sf::Text transactionText;
 	sf::Text capitalText;
 	sf::Text prevRevenueText;
+	sf::Text moveText;
 	Communicator* communicator;
 	Point* point;
 	Player* player;

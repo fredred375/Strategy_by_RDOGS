@@ -10,7 +10,7 @@
 //}
 
 Point::Point(float x, float y, std::wstring name, int id, sf::Texture& texture, sf::Font* font) :
-	body(sf::Vector2f(40.f, 60.f)), name(name), ownerID(0), id(id), capital(-1), prevRevenue(-1), transactionTimes(0), price(-1), updatePopUpInfo(false), bankrupt(false), texture(texture), font(font),
+	body(sf::Vector2f(40.f, 60.f)), name(name), ownerID(0), id(id), capital(-1), prevRevenue(-1), transactionTimes(0), price(-1), updatePopUpInfo(false), bankrupt(false), texture(texture), font(font), moveTime(0),
 	text("", *font, 25)
 {
 	body.setOrigin(body.getSize().x / 2, body.getSize().y);
@@ -19,7 +19,7 @@ Point::Point(float x, float y, std::wstring name, int id, sf::Texture& texture, 
 	body.setTexture(&this->texture);
 
 	text.setOrigin(text.getLocalBounds().width / 2.f, text.getLocalBounds().height / 2.f);
-	text.setPosition(x, y - body.getSize().y * 0.75f);
+	text.setPosition(body.getPosition().x, body.getPosition().y - body.getSize().y * 0.77f);
 	//text.setCharacterSize(30);
 	text.setFillColor(sf::Color::Black);
 }

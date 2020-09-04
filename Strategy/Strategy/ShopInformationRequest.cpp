@@ -30,16 +30,18 @@ void ShopInformationRequest::update()
 		sf::Uint32 price;
 		sf::Uint32 prevRevenue;
 		sf::Uint16 transactionTimes;
+		sf::Uint16 duration;
 
 		switch (receiveProperties.requestValidity)
 		{
 		case RequestValidity::VALID:
-			this->receivePacket >> shopID  >> ownerID >> capital >> price >> prevRevenue >> transactionTimes;
+			this->receivePacket >> shopID  >> ownerID >> capital >> price >> prevRevenue >> transactionTimes >> duration;
 			//point->setOwnerID(ownerID);
 			point->setCapital(capital);
 			point->setPrice(price);
 			point->setPrevRevenue(prevRevenue);
 			point->setTransactionTimes(transactionTimes);
+			point->moveTime = duration;
 			break;
 		case RequestValidity::INVALID_SHOP_ID:
 			printf("Please fix, invalid shop id\n");
@@ -48,6 +50,7 @@ void ShopInformationRequest::update()
 			point->setPrice(-1);
 			point->setPrevRevenue(-1);
 			point->setTransactionTimes(-1);
+			point->moveTime = -1;
 			break;
 		default:
 			break;
@@ -64,6 +67,7 @@ void ShopInformationRequest::update()
 		point->setPrice(-2);
 		point->setPrevRevenue(-2);
 		point->setTransactionTimes(-2);
+		point->moveTime = -2;
 		point->updatePopUpInfo = true;
 	}
 }

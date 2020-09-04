@@ -628,15 +628,6 @@ void MapState::render(sf::RenderWindow* window)
 	{
 		pointHoverUI->draw(window);
 	}
-	if (!notifications.empty())
-	{
-		window->setView(notifView);
-		for (auto notification : notifications)
-		{
-			notification->draw(window);
-		}
-		window->setView(view);
-	}
 	if (popUpWindow->activated)
 	{
 		popUpWindow->draw(window);
@@ -644,6 +635,15 @@ void MapState::render(sf::RenderWindow* window)
 	if (teamPopUp->activated)
 	{
 		teamPopUp->draw(window);
+		window->setView(view);
+	}
+	if (!notifications.empty())
+	{
+		window->setView(notifView);
+		for (auto notification : notifications)
+		{
+			notification->draw(window);
+		}
 		window->setView(view);
 	}
 }
