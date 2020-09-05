@@ -36,7 +36,7 @@ void ShopInformationRequest::update()
 		{
 		case RequestValidity::VALID:
 			this->receivePacket >> shopID  >> ownerID >> capital >> price >> prevRevenue >> transactionTimes >> duration;
-			//point->setOwnerID(ownerID);
+			point->setOwnerID(ownerID);
 			point->setCapital(capital);
 			point->setPrice(price);
 			point->setPrevRevenue(prevRevenue);
