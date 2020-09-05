@@ -14,7 +14,7 @@ Point::Point(float x, float y, std::wstring name, int id, sf::Texture& texture, 
 	text("", *font, 25)
 {
 	body.setOrigin(body.getSize().x / 2, body.getSize().y);
-	body.setPosition(x, y - 30.f);
+	body.setPosition(x, y);
 	//this->texture.setSmooth(true);
 	body.setTexture(&this->texture);
 
