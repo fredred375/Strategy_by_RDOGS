@@ -43,7 +43,7 @@ public:
 	void setPosition(Point* point);
 	std::vector<Point*> getProperties() const { return properties; }
 	bool removeProperty(int shopID);
-	bool addProperty(Point* point); // called point.setOwnerID()
+	bool addProperty(Point* point);
 	void draw(sf::RenderWindow* window) { window->draw(playerBody); }
 	void moveToPoint(Point* dest, sf::Uint16 time);
 	void update(const float& dt);

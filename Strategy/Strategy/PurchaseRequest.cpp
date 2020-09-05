@@ -47,9 +47,6 @@ void PurchaseRequest::update()
 		case RequestValidity::FREQUENT_PURCHASE:
 			printf("Frequent purchase\n");
 			break;
-		case RequestValidity::ALREADY_OWNED:
-			printf("Already owned\n");
-			break;
 		default:
 			break;
 		}
