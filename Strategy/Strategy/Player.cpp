@@ -40,6 +40,9 @@ bool Player::removeProperty(int shopID)
 bool Player::addProperty(Point* point)
 {
 	properties.push_back(point);
+	// MODIFY AFTERWARDS
+	point->setOwnerID(this->getID());
+	updateInfoBox = true;
 	return true;
 }
 

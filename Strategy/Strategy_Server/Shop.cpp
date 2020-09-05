@@ -2,12 +2,12 @@
 #include "Team.h"
 
 Shop::Shop(sf::Uint8 ID)
-	:ID(ID), capital({ 0 }), basePrice({ 0 }), baseRevenue({ 0 }), moveTime({ 0 }), ownerID(0), bankrupted(false), transactionTimes(0)
+	:ID(ID), capital({ 0 }), basePrice({ 0 }), baseRevenue({ 0 }), moveTime({ 0 }), ownerID(0), bankrupted(false), transactionTimes(0), prevRev(0)
 {
 }
 
 Shop::Shop(sf::Uint8 ID, std::array<sf::Uint32, numCapPhases> capital, std::array<sf::Uint32, numCapPhases> basePrice, std::array<sf::Uint32, numRevPhases> baseRevenue, std::array<double, numShops + 1> moveTime)
-	: ID(ID), capital(capital), basePrice(basePrice), baseRevenue(baseRevenue), moveTime(moveTime), ownerID(0), bankrupted(false), transactionTimes(0)
+	: ID(ID), capital(capital), basePrice(basePrice), baseRevenue(baseRevenue), moveTime(moveTime), ownerID(0), bankrupted(false), transactionTimes(0), prevRev(0)
 {
 }
 
