@@ -114,6 +114,7 @@ void MapState::initPoints()
 	points[61 - 1].setTexture(textures["locationMark4.8"]);
 	points[71 - 1].setTexture(textures["locationMark4.9"]);
 	points[72 - 1].setTexture(textures["locationMark4.9"]);
+	points[60 - 1].setTexture(textures["locationMark4.10"]);
 
 }
 
@@ -824,6 +825,7 @@ void MapState::onPlayerInformation(sf::Int32 cash, sf::Int32 cap, std::vector<sf
 		player->addProperty(&points.at(shopID - 1));
 	}
 	player->setCash(cash);
+	player->setCap(cap);
 }
 
 void MapState::onSell(sf::Uint8 shopID, sf::Uint8 purchasingTeamID, sf::Uint32 income, sf::Int32 cashBalance, sf::Int32 cap)
@@ -862,4 +864,5 @@ void MapState::onBankrupt(sf::Uint8 shopID, sf::Int32 cap)
 	notifications.back()->setString(2, L"你的商家總資本額現在是:");
 	notifications.back()->setString(3, std::to_wstring(cap) + L"元");
 	player->removeProperty(shopID);
+	player->setCap(cap);
 }
