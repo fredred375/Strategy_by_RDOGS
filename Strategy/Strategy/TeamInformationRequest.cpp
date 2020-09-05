@@ -35,12 +35,13 @@ void TeamInformationRequest::update()
 		switch (receiveProperties.requestValidity)
 		{
 		case RequestValidity::VALID:
-			this->receivePacket >> teamID >> cash >> capital >> numShopsOwned >> visitingShopID;
+			this->receivePacket >> teamID >> cash >> capital >> numShopsOwned;
 			for (size_t i = 0; i < numShopsOwned; i++)
 			{
 				receivePacket >> tempShopID;
 				ownedShopsID.emplace_back(tempShopID);
 			}
+			this->receivePacket >> visitingShopID;
 			team->setCash(cash);
 			team->setCap(capital);
 			team->setProperties(ownedShopsID);

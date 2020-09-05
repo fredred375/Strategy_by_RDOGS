@@ -797,7 +797,11 @@ void Server::updateEvents()
 
 			for (auto shop : shops)
 			{
-				shop->setPrevRevenue(shop->getRevenue(this->revPhase));
+				if (shop != nullptr)
+				{
+					shop->setPrevRevenue(shop->getRevenue(this->revPhase));
+				}
+				
 			}
 
 			for (size_t i = 1; i <= numTeams; i++)
