@@ -60,6 +60,8 @@ private:
 
 	sf::Uint16 transactionTimes;
 
+	sf::Uint32 prevRevenue = 0;
+
 	sf::Clock timeSinceTransaction;
 
 
@@ -87,11 +89,9 @@ public:
 
 	sf::Uint32 getRevenue(sf::Uint8 phase) { return this->baseRevenue[phase]; };
 
-	sf::Uint32 getPrevRevenue(sf::Uint8 phase) 
-	{ 
-		if (phase == 0) return 0;
-		return this->baseRevenue[phase]; 
-	};
+	sf::Uint32 getPrevRevenue() { return this->prevRevenue; };
+
+	void setPrevRevunue(sf::Uint32 rev) { this->prevRevenue = rev; };
 
 	std::list<ShopTag> getTags() { return this->tags; };
 

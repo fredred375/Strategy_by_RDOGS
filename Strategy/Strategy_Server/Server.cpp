@@ -511,7 +511,7 @@ void Server::handleRequests()
 						<< shop->getOwnerID()
 						<< shop->getCapital(this->capPhase)
 						<< shop->getPrice(this->capPhase)
-						<< shop->getPrevRevenue(this->revPhase)
+						<< shop->getPrevRevenue()
 						<< shop->getTransactionTimes()
 						<< static_cast<sf::Uint16>((this->shops[this->teams.at(i)->getPosition()->getID()]->getMoveTime(shop)) * 60);
 
@@ -801,9 +801,8 @@ void Server::updateEvents()
 			{
 				if (shop != nullptr)
 				{
-					shop->setPrevRevenue(shop->getRevenue(this->revPhase));
+					shop->setPrevRevunue(shop->getRevenue(this->revPhase));
 				}
-				
 			}
 
 			for (size_t i = 1; i <= numTeams; i++)
