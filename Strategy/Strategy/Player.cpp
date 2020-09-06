@@ -13,6 +13,12 @@ Player::Player(int playerId, sf::Texture* texture) :
 	playerBody.setTexture(this->texture);
 }
 
+void Player::setCash(int cash)
+{
+	this->cash = cash;
+	updateCashUI = true;
+}
+
 
 void Player::setPosition(Point* point)
 {

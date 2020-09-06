@@ -28,11 +28,7 @@ public:
 	Player(int playerId, sf::Texture* texture);
 	sf::Vector2f getPosition() const { return playerBody.getPosition(); }
 	int getCash() const { return cash; }
-	void setCash(int cash)
-	{
-		this->cash = cash;
-		updateCashUI = true;
-	}
+	void setCash(int cash);
 	int getCap() { return this->cap; }
 	void setCap(int cap) { this->cap = cap; updateCapUI = true; }
 	void setPointList(std::vector<Point>* pointList) { this->pointList = pointList; }

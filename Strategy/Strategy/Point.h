@@ -32,14 +32,7 @@ public:
 	void draw(sf::RenderWindow* window);
 	bool clicked(float mouseX, float mouseY);
 	int getOwnerID() const { return ownerID; }
-	void setOwnerID(int ownerID) { 
-		if (ownerID <= 8 && ownerID >= 1)
-		{
-			this->ownerID = ownerID;
-			this->text.setString(std::to_string(ownerID));
-			centerText(text, text.getPosition());
-		}
-	}
+	void setOwnerID(int ownerID);
 	void updateText();
 	sf::Vector2f getPosition() const { return body.getPosition(); }
 	int getID() const { return id; }
@@ -54,10 +47,7 @@ public:
 	void purchased(Player* player);
 	void setTag(int tag) { this->tag.push_back(static_cast<ShopTag>(tag)); };
 	std::vector<ShopTag>& getTag() { return tag; }
-	void setFont(sf::Font* font) {
-		this->font = font; 
-		text.setFont(*this->font);
-	};
+	void setFont(sf::Font* font);
 	void setTexture(sf::Texture& texture) { this->body.setTexture(&texture); };
 	sf::Vector2f getSize() const { return body.getSize(); }
 	bool getNonPurchasable() { return this->nonPurchasable; };

@@ -45,6 +45,16 @@ bool Point::clicked(float mouseX, float mouseY)
 	return false;
 }
 
+void Point::setOwnerID(int ownerID)
+{ 
+	if (ownerID <= numTeams && ownerID >= 1)
+	{
+		this->ownerID = ownerID;
+		this->text.setString(std::to_string(ownerID));
+		centerText(text, text.getPosition());
+	}
+}
+
 void Point::updateText()
 {
 	if (this->nonPurchasableClock.getElapsedTime() > nonPurchasableTime)
@@ -59,6 +69,12 @@ void Point::purchased(Player* player)
 	ownerID = player->getID();
 	this->text.setString(std::to_string(ownerID));
 	centerText(text, text.getPosition());
+}
+
+void Point::setFont(sf::Font* font)
+{
+	this->font = font; 
+	text.setFont(*this->font);
 }
 
 void Point::setNonPurchasable()
