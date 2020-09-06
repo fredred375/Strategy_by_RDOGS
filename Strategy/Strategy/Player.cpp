@@ -18,6 +18,10 @@ void Player::setPosition(Point* point)
 {
 	this->dest = point;
 	arrived = true;
+	if (point->getOwnerID() == this->getID())
+	{
+		point->setNonPurchasable();
+	}
 	playerBody.setPosition(point->getPosition());
 	updatePosUI;
 }
@@ -65,6 +69,10 @@ void Player::update(const float& dt)
 		{
 			playerBody.setPosition(dest->getPosition());
 			arrived = true;
+			if (this->dest->getOwnerID() == this->getID()) //  revisit
+			{
+				this->dest->setNonPurchasable();
+			}
 			updatePosUI = true;
 		}
 		else
