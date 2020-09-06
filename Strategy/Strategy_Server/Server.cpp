@@ -547,6 +547,13 @@ void Server::handleRequests()
 					this->print("RSPN", "Denied an invalid SHOP_PURCHASE request from team " + std::to_string(i) + ": NOT_ON_SITE");
 				}
 
+				else if (i == requestedShop->getOwnerID())
+				{
+					sendPackets.back()
+						<< PacketProperties(receivePacketProperties.ID, PacketType::RESPONSE, SubType::RESPONSE_SHOP_PURCHASE, RequestValidity::ALREADY_OWNED);
+					this->print("RSPN", "Denied an invalid SHOP_PURCHASE request from team " + std::to_string(i) + ": ALREADY_OWNED");
+				}
+
 				else if (requestedShop->purchasable())
 				{
 					sf::Uint32 price = requestedShop->getPrice(this->capPhase);
@@ -789,6 +796,15 @@ void Server::updateEvents()
 			// Send
 
 			std::vector<sf::Uint32> tempByShop;
+
+			for (auto shop : shops)
+			{
+				if (shop != nullptr)
+				{
+					shop->setPrevRevenue(shop->getRevenue(this->revPhase));
+				}
+				
+			}
 
 			for (size_t i = 1; i <= numTeams; i++)
 			{

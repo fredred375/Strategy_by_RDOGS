@@ -33,9 +33,12 @@ public:
 	bool clicked(float mouseX, float mouseY);
 	int getOwnerID() const { return ownerID; }
 	void setOwnerID(int ownerID) { 
-		this->ownerID = ownerID;
-		this->text.setString(std::to_string(ownerID));
-		centerText(text, text.getPosition());
+		if (ownerID <= 8 && ownerID >= 1)
+		{
+			this->ownerID = ownerID;
+			this->text.setString(std::to_string(ownerID));
+			centerText(text, text.getPosition());
+		}
 	}
 	void updateText();
 	sf::Vector2f getPosition() const { return body.getPosition(); }

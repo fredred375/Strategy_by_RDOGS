@@ -299,16 +299,6 @@ MapState::~MapState()
 
 void MapState::update(const float& dt)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-	{
-		window->close();
-		return;
-	}
-	//if (mouseData->leftClicked)
-	//{
-	//	notifications.push_back(new Notification(&font, &textures["notification"]));
-	//	notifications.back()->setPosition(sf::Vector2f(25.f, 2160.f - 420.f * notifications.size()));
-	//}
 	playerUI->update(mouseData, dt);
 	if (!popUpWindow->activated && !teamPopUp->activated)
 	{
