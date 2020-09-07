@@ -32,7 +32,7 @@
 
 const sf::Time selectorTimeout = sf::milliseconds(250); 
 
-const sf::Time purchaseCD = sf::seconds(90);
+const sf::Time purchaseCD = sf::seconds(120);
 
 const sf::Time backUpTimeGap = sf::seconds(60);
 

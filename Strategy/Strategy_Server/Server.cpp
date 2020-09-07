@@ -337,7 +337,7 @@ void Server::initEvents()
 	case GameMode::Release:
 	{
 		this->events.emplace(0, 0, GameEventType::SYNCHRONIZE);
-		this->events.emplace(1, 0, GameEventType::REVENUE);
+		//this->events.emplace(1, 0, GameEventType::REVENUE);
 		this->events.emplace(1, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(2, 0, GameEventType::SYNCHRONIZE);
 
