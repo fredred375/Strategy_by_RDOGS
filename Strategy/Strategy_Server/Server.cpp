@@ -337,24 +337,22 @@ void Server::initEvents()
 	case GameMode::Release:
 	{
 		this->events.emplace(0, 0, GameEventType::SYNCHRONIZE);
-		//this->events.emplace(1, 0, GameEventType::REVENUE);
 		this->events.emplace(1, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(2, 0, GameEventType::SYNCHRONIZE);
-
 		this->events.emplace(2, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(3, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(4, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(5, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(5, 0, GameEventType::BANKRUPT);
-		this->events.emplace(8, 0, GameEventType::REVENUE);
+		this->events.emplace(6, 0, GameEventType::REVENUE);
 		this->events.emplace(10, 0, GameEventType::NEXT_REV_PHASE);
 		this->events.emplace(10, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(12, 0, GameEventType::REVENUE);
 		this->events.emplace(15, 0, GameEventType::BANKRUPT);
 		this->events.emplace(15, 0, GameEventType::SYNCHRONIZE);
-		this->events.emplace(18, 0, GameEventType::REVENUE);
 		this->events.emplace(20, 0, GameEventType::NEXT_CAP_PHASE);
+		this->events.emplace(20, 0, GameEventType::REVENUE);
 		this->events.emplace(20, 0, GameEventType::PRINT_LEADER);
-		this->events.emplace(28, 0, GameEventType::REVENUE);
 		this->events.emplace(30, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(30, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(35, 0, GameEventType::BANKRUPT);
