@@ -189,7 +189,7 @@ void Server::initData()
 		}
 	}
 
-	std::vector<sf::Uint8> startingPointIndices = { 0, 39, 33, 46, 3, 24, 47, 7, 69 };
+	std::vector<sf::Uint8> startingPointIndices = { 0, 61, 71, 69, 59, 73, 68, 60, 63 };
 
 	for (size_t i = 1; i < teams.size(); i++)
 	{
