@@ -285,7 +285,7 @@ MapState::MapState(sf::RenderWindow* window, std::stack<State*>* states, MouseDa
 	initPoints();
 	initMap();
 	initUI();
-	view = sf::View(sf::Vector2f(2000.f, 2000.f), sf::Vector2f(constants::MAPVIEW_WIDTH, constants::MAPVIEW_HEIGHT));
+	view = sf::View(sf::Vector2f(2150.f, 2900.f), sf::Vector2f(constants::MAPVIEW_WIDTH, constants::MAPVIEW_HEIGHT));
 	view.setViewport(mapViewport);
 	UIView = sf::View(sf::Vector2f(constants::UIVIEW_WIDTH / 2.f * -1.f, constants::UIVIEW_HEIGHT / 2.f), sf::Vector2f(constants::UIVIEW_WIDTH, constants::UIVIEW_HEIGHT));
 	UIView.setViewport(UIViewport);
