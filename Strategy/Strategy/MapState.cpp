@@ -153,6 +153,7 @@ void MapState::initTextures()
 	textures["team6"].loadFromFile("Resources/Textures/player_icon/team6.png");
 	textures["team7"].loadFromFile("Resources/Textures/player_icon/team7.png");
 	textures["team8"].loadFromFile("Resources/Textures/player_icon/team8.png");
+	textures["team9"].loadFromFile("Resources/Textures/player_icon/team9.png");
 
 }
 
