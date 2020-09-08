@@ -81,7 +81,6 @@ void MapState::initPoints()
 	points.emplace_back(1959.78f, 2633.9f, std::to_wstring(shopIndex) + blank + L"星巴克 公館店", shopIndex++, textures["locationMark"], &font);
 	//player->setPosition(&points.at(player->getID() - 1));
 
-	// hi
 	std::vector<std::vector<sf::Uint8>> tagsShopIndex =
 	{
 		{ 13, 14, 15, 21, 22, 24, 25, 26, 28 },
