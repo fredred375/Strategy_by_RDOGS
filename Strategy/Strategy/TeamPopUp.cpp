@@ -26,13 +26,13 @@ void TeamPopUp::updateText()
 	{
 		destText.setString("-1");
 	}
-	centerTextRight(destText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.451f, windowBody.getSize().y * 0.34f));
+	centerTextRight(destText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.471f, windowBody.getSize().y * 0.34f));
 
 	cashText.setString(std::to_wstring(team->getCash()));
-	centerTextRight(cashText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.451f, windowBody.getSize().y * 0.515f));
+	centerTextRight(cashText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.471f, windowBody.getSize().y * 0.515f));
 
 	capitalText.setString(std::to_wstring(team->getCap()));
-	centerTextRight(capitalText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.451f, windowBody.getSize().y * 0.695f));
+	centerTextRight(capitalText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.471f, windowBody.getSize().y * 0.695f));
 }
 
 TeamPopUp::TeamPopUp(Player* player, sf::Font* font, Communicator* communicator) :
@@ -91,16 +91,16 @@ void TeamPopUp::initDraw(const sf::View& view)
 	centerText(nameText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 285.f / 1080.f, windowBody.getSize().y * 125.f / 810.f));
 
 	destText.setString(L"載入中");
-	destText.setCharacterSize(windowBody.getSize().x / 25.f);
-	centerTextRight(destText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.451f, windowBody.getSize().y * 0.34f));
+	destText.setCharacterSize(windowBody.getSize().x / 32.f);
+	centerTextRight(destText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.471f, windowBody.getSize().y * 0.34f));
 
 	cashText.setString(L"載入中");
 	cashText.setCharacterSize(windowBody.getSize().x / 25.f);
-	centerTextRight(cashText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.451f, windowBody.getSize().y * 0.515f));
+	centerTextRight(cashText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.471f, windowBody.getSize().y * 0.515f));
 
 	capitalText.setString(L"載入中");
 	capitalText.setCharacterSize(windowBody.getSize().x / 25.f);
-	centerTextRight(capitalText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.451f, windowBody.getSize().y * 0.695f));
+	centerTextRight(capitalText, windowBody.getPosition() + sf::Vector2f(windowBody.getSize().x * 0.471f, windowBody.getSize().y * 0.695f));
 
 }
 
@@ -118,6 +118,7 @@ void TeamPopUp::update(MouseData* mouseData)
 		team->updateTeamUI = false;
 	}
 	checkMouseData(mouseData);
+	infoBox.update(mouseData);
 }
 
 void TeamPopUp::setWindow(sf::RenderWindow* window)

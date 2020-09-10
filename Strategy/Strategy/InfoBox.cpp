@@ -29,7 +29,7 @@ InfoBox::InfoBox(sf::Font* font) :
 }
 
 InfoBox::InfoBox(sf::Font* font, sf::View view, sf::FloatRect viewport) :
-	boxView(view), window(nullptr), upperBound(857.5f), lowerBound(857.5f), font(font)
+	boxView(view), window(nullptr), upperBound(view.getCenter().y), lowerBound(view.getCenter().y), font(font)
 {
 	boxView.setViewport(viewport);
 	infoBody.emplace_back(sf::Vector2f(constants::INFO_BOX_WIDTH, constants::INFO_BOX_HEIGHT));
@@ -94,9 +94,9 @@ void InfoBox::update(MouseData* mouseData)
 {
 	if (this->window)
 	{
-		if (mouseData->mousePosPixel.x >= 30 && mouseData->mousePosPixel.x <= 450)
+		if (mouseData->mousePosPixel.x >= boxView.getViewport().left * window->getSize().x && mouseData->mousePosPixel.x <= (boxView.getViewport().left + boxView.getViewport().width) * window->getSize().x)
 		{
-			if (mouseData->mousePosPixel.y >= 250 && mouseData->mousePosPixel.y <= 950)
+			if (mouseData->mousePosPixel.y >= boxView.getViewport().top * window->getSize().y && mouseData->mousePosPixel.y <= (boxView.getViewport().top + boxView.getViewport().height) * window->getSize().y)
 			{
 				if (mouseData->leftPressed && mouseData->moving)
 				{
