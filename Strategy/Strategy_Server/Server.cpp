@@ -189,7 +189,7 @@ void Server::initData()
 		}
 	}
 
-	std::vector<sf::Uint8> startingPointIndices = { 0, 61, 71, 69, 59, 73, 68, 60, 63 };
+	std::vector<sf::Uint8> startingPointIndices = { 0, 61, 71, 69, 59, 73, 68, 60, 63, 3 };
 
 	for (size_t i = 1; i < teams.size(); i++)
 	{
@@ -354,6 +354,7 @@ void Server::initEvents()
 		this->events.emplace(20, 0, GameEventType::REVENUE);
 		this->events.emplace(20, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(30, 0, GameEventType::SYNCHRONIZE);
+		this->events.emplace(30, 0, GameEventType::REVENUE);
 		this->events.emplace(30, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(35, 0, GameEventType::BANKRUPT);
 		this->events.emplace(40, 0, GameEventType::REVENUE);
@@ -368,7 +369,7 @@ void Server::initEvents()
 		this->events.emplace(60, 0, GameEventType::NEXT_REV_PHASE);
 		this->events.emplace(60, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(60, 0, GameEventType::SYNCHRONIZE);
-		this->events.emplace(65, 0, GameEventType::NEXT_CAP_PHASE);
+		this->events.emplace(70, 0, GameEventType::NEXT_CAP_PHASE);
 		this->events.emplace(70, 0, GameEventType::REVENUE);
 		this->events.emplace(70, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(75, 0, GameEventType::BANKRUPT);

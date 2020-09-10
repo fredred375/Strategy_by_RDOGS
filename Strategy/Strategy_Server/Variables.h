@@ -23,7 +23,7 @@
 // Server
 
 
-#define numTeams 8
+#define numTeams 9
 #define numShops 75
 #define numRevPhases 5
 #define numCapPhases 4

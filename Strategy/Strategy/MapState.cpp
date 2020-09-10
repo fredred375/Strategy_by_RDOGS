@@ -269,7 +269,7 @@ MapState::MapState(sf::RenderWindow* window, std::stack<State*>* states, MouseDa
 	font.loadFromFile("Resources/Fonts/NotoSansCJKtc-Regular.otf");
 	initTextures();
 	player = new Player(teamID, &this->textures["player"]);
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < numTeams; i++)
 	{
 		if (i + 1 != teamID)
 		{

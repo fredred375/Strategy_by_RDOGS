@@ -17,7 +17,7 @@
 
 // Client
 
-#define numTeams 8
+#define numTeams 9
 #define port 2000
 
 //sf::Uint8 teamIDGlobal = 0;

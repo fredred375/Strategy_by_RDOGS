@@ -9,11 +9,11 @@ int main()
 {
 	int teamIDInput = 0;
 	std::string ipInput;
-	while (!(teamIDInput >= 1 && teamIDInput <= 8))
+	while (!(teamIDInput >= 1 && teamIDInput <= numTeams))
 	{
 		printf("Enter team ID: ");
 		std::cin >> teamIDInput;
-		if (!(teamIDInput >= 1 && teamIDInput <= 8))
+		if (!(teamIDInput >= 1 && teamIDInput <= numTeams))
 		{
 			printf("Invalid ID...\n");
 		}
