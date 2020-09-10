@@ -945,11 +945,11 @@ void Server::updateEvents()
 			}
 
 			file
-				<< "Team\t\tAsset\n";
+				<< "Team\tAsset\n";
 
 			for (size_t i = 1; i <= numTeams; i++)
 			{
-				file << assetByTeam.top().second << "\t\t" << assetByTeam.top().first << "\n";
+				file << assetByTeam.top().second << "       " << assetByTeam.top().first << "\n";
 				assetByTeam.pop();
 			}
 		}	
