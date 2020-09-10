@@ -189,7 +189,7 @@ void Server::initData()
 		}
 	}
 
-	std::vector<sf::Uint8> startingPointIndices = { 0, 61, 71, 69, 59, 73, 68, 60, 63, 3 };
+	std::vector<sf::Uint8> startingPointIndices = { 0, 61, 71, 69, 59, 73, 68, 60, 63, 2 };
 
 	for (size_t i = 1; i < teams.size(); i++)
 	{
@@ -342,42 +342,76 @@ void Server::initEvents()
 		this->events.emplace(2, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(3, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(4, 0, GameEventType::SYNCHRONIZE);
+		this->events.emplace(4, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(5, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(5, 0, GameEventType::BANKRUPT);
 		this->events.emplace(6, 0, GameEventType::REVENUE);
+		this->events.emplace(6, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(10, 0, GameEventType::NEXT_REV_PHASE);
 		this->events.emplace(10, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(12, 0, GameEventType::REVENUE);
+		this->events.emplace(12, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(14, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(15, 0, GameEventType::BANKRUPT);
 		this->events.emplace(15, 0, GameEventType::SYNCHRONIZE);
+		this->events.emplace(16, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(18, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(20, 0, GameEventType::NEXT_CAP_PHASE);
 		this->events.emplace(20, 0, GameEventType::REVENUE);
 		this->events.emplace(20, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(22, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(24, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(26, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(28, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(30, 0, GameEventType::SYNCHRONIZE);
 		this->events.emplace(30, 0, GameEventType::REVENUE);
 		this->events.emplace(30, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(32, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(34, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(35, 0, GameEventType::BANKRUPT);
+		this->events.emplace(36, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(38, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(40, 0, GameEventType::REVENUE);
 		this->events.emplace(40, 0, GameEventType::NEXT_REV_PHASE);
 		this->events.emplace(40, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(42, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(44, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(45, 0, GameEventType::NEXT_CAP_PHASE);
 		this->events.emplace(45, 0, GameEventType::SYNCHRONIZE);
+		this->events.emplace(46, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(48, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(50, 0, GameEventType::REVENUE);
 		this->events.emplace(50, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(52, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(54, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(55, 0, GameEventType::BANKRUPT);
+		this->events.emplace(56, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(58, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(60, 0, GameEventType::REVENUE);
 		this->events.emplace(60, 0, GameEventType::NEXT_REV_PHASE);
 		this->events.emplace(60, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(60, 0, GameEventType::SYNCHRONIZE);
+		this->events.emplace(62, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(64, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(66, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(68, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(70, 0, GameEventType::NEXT_CAP_PHASE);
 		this->events.emplace(70, 0, GameEventType::REVENUE);
 		this->events.emplace(70, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(72, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(74, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(75, 0, GameEventType::BANKRUPT);
 		this->events.emplace(75, 0, GameEventType::SYNCHRONIZE);
+		this->events.emplace(76, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(78, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(80, 0, GameEventType::REVENUE);
 		this->events.emplace(80, 0, GameEventType::NEXT_REV_PHASE);
 		this->events.emplace(80, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(82, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(84, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(85, 0, GameEventType::BANKRUPT);
+		this->events.emplace(86, 0, GameEventType::PRINT_LEADER);
+		this->events.emplace(88, 0, GameEventType::PRINT_LEADER);
 		this->events.emplace(90, 0, GameEventType::REVENUE);
 		this->events.emplace(90, 0, GameEventType::PRINT_LEADER);
 	}
@@ -895,6 +929,9 @@ void Server::updateEvents()
 
 		case GameEventType::PRINT_LEADER:
 		{
+			std::priority_queue<std::pair<int, int>> assetByTeam;
+			std::ofstream file("leader.txt");
+
 			for (size_t i = 1; i <= numTeams; i++)
 			{
 				int asset = 0;
@@ -903,6 +940,17 @@ void Server::updateEvents()
 				asset += this->teams[i]->getCapital();
 
 				this->print("LDER", "Team " + std::to_string(i) + " now has $" + std::to_string(asset) + " worth of asset!");
+
+				assetByTeam.push(std::make_pair(asset, i));
+			}
+
+			file
+				<< "Team\t\tAsset\n";
+
+			for (size_t i = 1; i <= numTeams; i++)
+			{
+				file << assetByTeam.top().second << "\t\t" << assetByTeam.top().first << "\n";
+				assetByTeam.pop();
 			}
 		}	
 
